@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main
+package cz.cvut.fit.nurguitarsongbook.base
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

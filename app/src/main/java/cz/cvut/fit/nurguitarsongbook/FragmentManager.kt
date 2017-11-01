@@ -4,12 +4,13 @@ import android.app.Fragment
 import android.app.FragmentManager
 import android.os.Bundle
 import android.util.Log
+import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 
 class FragmentManager
 {
     var mFragmentManager: FragmentManager? = null
 
-    private var mCurrentFragment: Fragment? = null
+    private var mCurrentFragment: BaseFragment? = null
 
     val fragmentManager: FragmentManager
         get()
@@ -20,19 +21,19 @@ class FragmentManager
             return mFragmentManager ?: throw RuntimeException("Could not get Fragment Manager")
         }
 
-    fun <FragmentType : Fragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, fragmentManager: FragmentManager): FragmentType {
+    fun <FragmentType : BaseFragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, fragmentManager: FragmentManager): FragmentType {
         return changeFragment(fragmentClass, key, rFragContainer, fragmentManager, null)
     }
 
-    fun <FragmentType : Fragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, fragmentManager: FragmentManager, extras: Bundle?): FragmentType {
+    fun <FragmentType : BaseFragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, fragmentManager: FragmentManager, extras: Bundle?): FragmentType {
         return changeFragment(fragmentClass, key, rFragContainer, true, fragmentManager, extras)
     }
 
-    fun <FragmentType : Fragment> changeFragment(fragmentClass: Class<FragmentType>, key: String): FragmentType {
+    fun <FragmentType : BaseFragment> changeFragment(fragmentClass: Class<FragmentType>, key: String): FragmentType {
         return changeFragment(fragmentClass, key, MAIN_CONTAINER_ID, true, null, null)
     }
 
-    fun <FragmentType : Fragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, extras: Bundle): FragmentType {
+    fun <FragmentType : BaseFragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, extras: Bundle): FragmentType {
         return changeFragment(fragmentClass, key, MAIN_CONTAINER_ID, true, null, extras)
     }
 
@@ -54,7 +55,7 @@ class FragmentManager
      * *
      * @return Fragment instance
     </BundleType></FragmentType> */
-    protected fun <FragmentType : Fragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, addToBackStack: Boolean, frManager: FragmentManager?, extras: Bundle?): FragmentType {
+    protected fun <FragmentType : BaseFragment> changeFragment(fragmentClass: Class<FragmentType>, key: String, rFragContainer: Int, addToBackStack: Boolean, frManager: FragmentManager?, extras: Bundle?): FragmentType {
         // Sets specific fragmentManager (from parent fragment) or use globally defined fragment manager (topmost)
         val fm = frManager ?: fragmentManager
 
@@ -65,7 +66,7 @@ class FragmentManager
             val transaction = fm.beginTransaction()
 
             // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(rFragContainer, fragment, key)
+            transaction.replace(rFragContainer, fragment as Fragment, key)
 
             // Add the transaction to the back stack so the user can navigate back
             if (addToBackStack) {
@@ -119,7 +120,7 @@ class FragmentManager
      * *
      * @return Fragment instance
     </FragmentType> */
-    fun <FragmentType : Fragment> getFragment(fragmentClass: Class<FragmentType>, key: String, fm: FragmentManager, extras: Bundle?): FragmentType? {
+    fun <FragmentType : BaseFragment> getFragment(fragmentClass: Class<FragmentType>, key: String, fm: FragmentManager, extras: Bundle?): FragmentType? {
         try {
             // Check if fragment exists
             val existFragment = fm.findFragmentByTag(key)
@@ -136,9 +137,8 @@ class FragmentManager
                 fragment = fragmentClass.newInstance()
                 isReusing = false
             }
-            if (!fragment.isAdded) {
-                fragment.arguments = extras
-            }
+            fragment.data = extras
+
             Log.d(LOG_TAG, (if (isReusing) "ReUsing" else "Creating") + " Fragment: " + key)
 
             return fragmentClass.cast(fragment)
@@ -149,21 +149,6 @@ class FragmentManager
             return null
         }
 
-    }
-
-    /**
-     * Update current fragment when back pressed
-     */
-    fun onBackPressed() {
-        val currentFragment = currentFragment
-
-        var currentFragmentTag = ""
-
-        if (currentFragment != null) {
-            currentFragmentTag = currentFragment.tag
-        }
-
-        Log.d(LOG_TAG, "Back pressed to " + currentFragmentTag + " (backstack count " + fragmentManager.backStackEntryCount + ")")
     }
 
     fun removeFragmentAtBackStackIndex(index: Int) {
@@ -259,6 +244,3 @@ class FragmentManager
         private val LOG_TAG = "FragmentManager"
     }
 }
-/**
- * 1st Override without specifying fragment manager
- */

@@ -1,6 +1,5 @@
-package cz.cvut.fit.nurguitarsongbook.main
+package cz.cvut.fit.nurguitarsongbook.base
 
-import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -12,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 /**
  * Created by tomas on 01.11.2017.
  */
-abstract class BaseListFragment<T>: Fragment(), ListFragment<T> {
+abstract class BaseListFragment<T>: BaseFragment(), ListFragment<T> {
 
     private val adapter: BaseAdapter<T> by lazy { BaseAdapter<T>(this) }
 

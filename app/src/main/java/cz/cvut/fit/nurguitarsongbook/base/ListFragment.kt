@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main
+package cz.cvut.fit.nurguitarsongbook.base
 
 /**
  * Created by tomas on 01.11.2017.
