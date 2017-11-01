@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NURGuitarSongbook</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="menu_search">Search songs</string>
+    <string name="menu_chords">Chords</string>
+    <string name="menu_songs">Songs</string>
+    <string name="menu_songbooks">Song Lists</string>
+    <string name="menu_settings">Settings</string>
+
 </resources>

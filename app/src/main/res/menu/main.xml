@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_item_search"
+        android:title="@string/menu_search" />
+
+    <item android:id="@+id/menu_item_songbooks"
+        android:title="@string/menu_songbooks" />
+
+    <item android:id="@+id/menu_item_songs"
+        android:title="@string/menu_songs" />
+
+    <item android:id="@+id/menu_item_chords"
+        android:title="@string/menu_chords"
+        android:icon="@drawable/ic_guitar"/>
+
+    <item android:id="@+id/menu_item_setting"
+        android:title="@string/menu_settings" />
+
+</menu>
