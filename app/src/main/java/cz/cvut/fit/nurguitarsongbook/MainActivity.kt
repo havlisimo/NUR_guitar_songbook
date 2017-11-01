@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Set initial fragment
         if (savedInstanceState == null) {
-            App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.getSimpleName())
+            App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.simpleName)
         }
 
         // Main layout setup
