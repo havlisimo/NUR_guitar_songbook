@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.instance.activity = this
-
+        App.instance.fragmentManager.mFragmentManager = fragmentManager
         // Set initial fragment
         if (savedInstanceState == null) {
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.simpleName)

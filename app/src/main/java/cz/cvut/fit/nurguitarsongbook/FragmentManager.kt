@@ -74,7 +74,7 @@ class FragmentManager
             }
 
             // Commit the transaction
-            transaction.commit()
+            transaction.commitAllowingStateLoss()
 
             if (rFragContainer == MAIN_CONTAINER_ID) {
                 mCurrentFragment = fragment
