@@ -47,12 +47,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.menu_item_chords) {
+
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.getSimpleName())
         }
 
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onBackPressed() {
+        if (App.instance.fragmentManager.fragmentManager.backStackEntryCount==1) {
+            finish()
+        }
+        else {
+            super.onBackPressed()
+        }
     }
 
 }
