@@ -8,5 +8,7 @@
     <string name="menu_songs">Songs</string>
     <string name="menu_songbooks">Song Lists</string>
     <string name="menu_settings">Settings</string>
+    <string name="title_activity_song_detail">Song Detail</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

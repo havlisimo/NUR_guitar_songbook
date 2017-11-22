@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
+import cz.cvut.fit.nurguitarsongbook.main.songdetail.SongDetailActivity
+import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
 
@@ -49,6 +51,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (id == R.id.menu_item_chords) {
 
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.getSimpleName())
+        }
+
+        if ( id == R.id.menu_item_songs )
+        {
+            startActivity( SongDetailActivity.newIntent( this, Song( 211 ) ) );
         }
 
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
