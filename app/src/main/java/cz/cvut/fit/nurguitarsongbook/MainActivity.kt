@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if ( id == R.id.menu_item_songs )
         {
-            startActivity( SongDetailActivity.newIntent( this, Song( 211 ) ) );
+            startActivity( SongDetailActivity.newIntent( this, Song( 211, "Highway to Hell", "AC/DC", "I love this song, so good <3" ) ) );
         }
 
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
