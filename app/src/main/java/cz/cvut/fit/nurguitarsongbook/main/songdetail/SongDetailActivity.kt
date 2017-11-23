@@ -12,7 +12,8 @@ import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 
 import kotlinx.android.synthetic.main.activity_song_detail.*
 import cz.cvut.fit.nurguitarsongbook.R.string.app_name
-
+import kotlinx.android.synthetic.main.content_song_detail.*
+import kotlinx.android.synthetic.main.fragment_song_detail.*
 
 
 class SongDetailActivity : AppCompatActivity() {
@@ -31,6 +32,10 @@ class SongDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_song_detail)
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(song.name)
+        val f = fragment_song_detail
+        f.tv_song_name.setText( songName )
+        f.tv_song_artist.setText( songArtist )
+        f.tv_song_comment.setText( songComment )
     }
 
     companion object {
