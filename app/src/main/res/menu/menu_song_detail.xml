@@ -8,4 +8,16 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_mode_edit_black_24dp"
         />
+    <item
+        android:id="@+id/action_add_song_to_list"
+        android:title="Add song to list"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_add_black_24dp"
+        />
+    <item
+        android:id="@+id/action_play_song"
+        android:title="Play song"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_play_circle_outline_black_24dp"
+        />
 </menu>

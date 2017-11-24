@@ -53,6 +53,12 @@ class SongDetailActivity : AppCompatActivity() {
         if (item?.itemId == R.id.action_edit_song) {
             startActivityForResult( SongEditActivity.newIntent( this, songId ), 0 );
         }
+        if (item?.itemId == R.id.action_add_song_to_list) {
+            //TODO: Add song to list
+        }
+        if (item?.itemId == R.id.action_play_song) {
+            startActivity( PlaySongActivity.newIntent( this ) )
+        }
         return super.onOptionsItemSelected(item)
     }
 

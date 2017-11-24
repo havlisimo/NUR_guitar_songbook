@@ -24,6 +24,10 @@
         <activity
             android:name=".main.songdetail.SongEditActivity"
             android:label="@string/title_activity_song_edit"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main.songdetail.PlaySongActivity"
+            android:label="@string/title_activity_play_song"
             android:theme="@style/AppTheme"></activity>
     </application>
 
