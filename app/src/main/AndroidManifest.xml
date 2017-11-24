@@ -20,6 +20,10 @@
         <activity
             android:name=".main.songdetail.SongDetailActivity"
             android:label="@string/title_activity_song_detail"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main.songdetail.SongEditActivity"
+            android:label="@string/title_activity_song_edit"
             android:theme="@style/AppTheme"></activity>
     </application>
 
