@@ -11,6 +11,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Song playing..."/>
+        android:text="@string/song_playing"/>
 
 </android.support.constraint.ConstraintLayout>

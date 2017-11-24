@@ -38,9 +38,9 @@ class SongDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(song.name)
         val f = fragment_song_detail
-        f.tv_song_name.setText( "Name: " + song.name )
-        f.tv_song_artist.setText( "Artist: " + song.artist )
-        f.tv_song_comment.setText( "Comment:" + song.comment )
+        f.tv_song_name.setText( getString( R.string.name ) + ": " + song.name )
+        f.tv_song_artist.setText( getString(R.string.artist ) + ": " + song.artist )
+        f.tv_song_comment.setText( getString(R.string.comment ) + ": " + song.comment )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -65,9 +65,9 @@ class SongDetailActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         song = DataMockup.songs[songId]
         val f = fragment_song_detail
-        f.tv_song_name.setText( "Name: " + song.name )
-        f.tv_song_artist.setText( "Artist: " + song.artist )
-        f.tv_song_comment.setText( "Comment: " + song.comment )
+        f.tv_song_name.setText( getString( R.string.name ) + ": " + song.name )
+        f.tv_song_artist.setText( getString(R.string.artist ) + ": " + song.artist )
+        f.tv_song_comment.setText( getString(R.string.comment ) + ": " + song.comment )
     }
 
     companion object {

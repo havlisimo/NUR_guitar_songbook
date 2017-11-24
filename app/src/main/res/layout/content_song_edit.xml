@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/et_song_name"
-            android:text="Song name"/>
+            android:text="@string/name"/>
 
         <EditText
             android:id="@+id/et_song_name"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/et_song_name"
-            android:text="Song artist"
+            android:text="@string/artist"
             android:layout_below="@id/et_song_name"/>
 
         <EditText
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/et_song_name"
-            android:text="Comment"
+            android:text="@string/comment"
             android:layout_below="@id/et_song_artist"/>
 
         <EditText

@@ -12,5 +12,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_song_edit">Edit song data</string>
     <string name="title_activity_play_song">Song playing</string>
+    <string name="name">Name</string>
+    <string name="artist">Artist</string>
+    <string name="comment">Comment</string>
+    <string name="song_playing">Song playing...</string>
 
 </resources>
