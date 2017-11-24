@@ -18,30 +18,29 @@ import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.activity_song_detail.*
 import cz.cvut.fit.nurguitarsongbook.R.string.app_name
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
+import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import kotlinx.android.synthetic.main.content_song_detail.*
 import kotlinx.android.synthetic.main.fragment_song_detail.*
 
 
 class SongDetailActivity : AppCompatActivity() {
 
-    var song: Song = Song( 0, "", "", "" )
+    var song: Song = Song( "", "", "" )
+    var songId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val songId = intent.getIntExtra(INTENT_SONG_ID, 0);
-        val songName = intent.getStringExtra(INTENT_SONG_NAME)
-        val songArtist = intent.getStringExtra(INTENT_SONG_ARTIST)
-        val songComment = intent.getStringExtra(INTENT_SONG_COMMENT)
-        song = Song(songId, songName,songArtist,songComment)
+        songId = intent.getIntExtra(INTENT_SONG_ID, 0);
+        song = DataMockup.songs[songId]
 
         setContentView(R.layout.activity_song_detail)
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(song.name)
         val f = fragment_song_detail
-        f.tv_song_name.setText( "Name: " + songName )
-        f.tv_song_artist.setText( "Artist: " + songArtist )
-        f.tv_song_comment.setText( "Comment:" + songComment )
+        f.tv_song_name.setText( "Name: " + song.name )
+        f.tv_song_artist.setText( "Artist: " + song.artist )
+        f.tv_song_comment.setText( "Comment:" + song.comment )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -50,27 +49,28 @@ class SongDetailActivity : AppCompatActivity() {
         return true
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.action_edit_song) {
-            startActivity( SongEditActivity.newIntent( this, song ) );
+            startActivityForResult( SongEditActivity.newIntent( this, songId ), 0 );
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        song = DataMockup.songs[songId]
+        val f = fragment_song_detail
+        f.tv_song_name.setText( "Name: " + song.name )
+        f.tv_song_artist.setText( "Artist: " + song.artist )
+        f.tv_song_comment.setText( "Comment: " + song.comment )
     }
 
     companion object {
 
         private val INTENT_SONG_ID = "song_id"
-        private val INTENT_SONG_NAME = "song_name"
-        private val INTENT_SONG_ARTIST = "song_artist"
-        private val INTENT_SONG_COMMENT = "song_comment"
 
-        fun newIntent(context: Context, song: Song): Intent {
+        fun newIntent(context: Context, songId: Int): Intent {
             val intent = Intent(context, SongDetailActivity::class.java)
-            intent.putExtra(INTENT_SONG_ID, song.id)
-            intent.putExtra(INTENT_SONG_NAME, song.name)
-            intent.putExtra(INTENT_SONG_ARTIST, song.artist)
-            intent.putExtra(INTENT_SONG_COMMENT, song.comment)
+            intent.putExtra(INTENT_SONG_ID, songId)
             return intent
         }
     }
