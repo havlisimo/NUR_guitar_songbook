@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
@@ -36,6 +37,12 @@ class SongDetailActivity : AppCompatActivity() {
         f.tv_song_name.setText( "Name: " + songName )
         f.tv_song_artist.setText( "Artist: " + songArtist )
         f.tv_song_comment.setText( "Comment:" + songComment )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_song_detail, menu)
+        return true
     }
 
     companion object {
