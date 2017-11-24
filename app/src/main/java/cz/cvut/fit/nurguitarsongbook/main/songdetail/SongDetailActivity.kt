@@ -33,9 +33,9 @@ class SongDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(song.name)
         val f = fragment_song_detail
-        f.tv_song_name.setText( songName )
-        f.tv_song_artist.setText( songArtist )
-        f.tv_song_comment.setText( songComment )
+        f.tv_song_name.setText( "Name: " + songName )
+        f.tv_song_artist.setText( "Artist: " + songArtist )
+        f.tv_song_comment.setText( "Comment:" + songComment )
     }
 
     companion object {
