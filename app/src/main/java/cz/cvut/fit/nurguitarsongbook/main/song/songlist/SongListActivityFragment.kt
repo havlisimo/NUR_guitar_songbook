@@ -1,23 +1,12 @@
-package cz.cvut.fit.nurguitarsongbook.main.songlist
+package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
-import android.content.Context
-import android.content.Intent
-import android.support.v4.app.Fragment
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
-import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
-import cz.cvut.fit.nurguitarsongbook.main.chord.ChordDetailFragment
-import cz.cvut.fit.nurguitarsongbook.main.songdetail.SongDetailActivity
+import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailActivity
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
-import cz.cvut.fit.nurguitarsongbook.model.entity.Chord
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
-import kotlinx.android.synthetic.main.item_chord.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 
 /**

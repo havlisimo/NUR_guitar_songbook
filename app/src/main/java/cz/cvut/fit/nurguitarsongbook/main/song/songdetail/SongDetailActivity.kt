@@ -1,23 +1,15 @@
-package cz.cvut.fit.nurguitarsongbook.main.songdetail
+package cz.cvut.fit.nurguitarsongbook.main.song.songdetail
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 
 import kotlinx.android.synthetic.main.activity_song_detail.*
-import cz.cvut.fit.nurguitarsongbook.R.string.app_name
-import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import kotlinx.android.synthetic.main.content_song_detail.*
 import kotlinx.android.synthetic.main.fragment_song_detail.*

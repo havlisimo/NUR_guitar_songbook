@@ -1,16 +1,11 @@
-package cz.cvut.fit.nurguitarsongbook.main.songlist
+package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
-import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
-import cz.cvut.fit.nurguitarsongbook.main.songdetail.PlaySongActivity
-import cz.cvut.fit.nurguitarsongbook.main.songdetail.SongEditActivity
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 
 import kotlinx.android.synthetic.main.activity_song_list.*

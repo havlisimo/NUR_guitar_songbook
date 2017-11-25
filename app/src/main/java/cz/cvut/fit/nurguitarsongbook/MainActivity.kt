@@ -9,9 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
-import cz.cvut.fit.nurguitarsongbook.main.songdetail.SongDetailActivity
-import cz.cvut.fit.nurguitarsongbook.main.songlist.SongListActivity
-import cz.cvut.fit.nurguitarsongbook.model.entity.Song
+import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
 

@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main.songdetail
+package cz.cvut.fit.nurguitarsongbook.main.song.songdetail
 
 import android.support.v4.app.Fragment
 import android.os.Bundle
