@@ -12,6 +12,9 @@
     <string name="songbook_create">Create</string>
     <string name="songbook_cancel">Cancel</string>
     <string name="songbook_title">Create Songbook</string>
+    <string name="songbook_name_error">Name has to have at least 3 characters</string>
+    <string name="songbook_errors">Please review errors</string>
+    <string name="songbook_success">Songbook created seucesfully</string>
     <string name="title_activity_song_detail">Song Detail</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_song_edit">Edit song data</string>
@@ -21,4 +24,6 @@
     <string name="comment">Comment</string>
     <string name="song_playing">Song playing...</string>
     <string name="title_activity_song_list">Songs</string>
+
+
 </resources>

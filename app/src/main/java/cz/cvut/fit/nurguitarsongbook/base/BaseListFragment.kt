@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 abstract class BaseListFragment<T>: BaseFragment(), ListFragment<T> {
 
-    private val adapter: BaseAdapter<T> by lazy { BaseAdapter<T>(this) }
+    protected val adapter: BaseAdapter<T> by lazy { BaseAdapter<T>(this) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater?.inflate(R.layout.fragment_list, container, false)
