@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cz.cvut.fit.nurguitarsongbook.main.songdetail.SongDetailActivityFragment"
+    tools:context=".main.song.songdetail.SongDetailActivityFragment"
     tools:showIn="@layout/activity_song_detail">
 
     <RelativeLayout

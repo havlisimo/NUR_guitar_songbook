@@ -1,9 +1,8 @@
-package cz.cvut.fit.nurguitarsongbook.main.songdetail
+package cz.cvut.fit.nurguitarsongbook.main.song.songdetail
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import cz.cvut.fit.nurguitarsongbook.R
 
