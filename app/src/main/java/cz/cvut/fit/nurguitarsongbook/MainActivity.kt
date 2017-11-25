@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
 import cz.cvut.fit.nurguitarsongbook.main.chord.SongbookListFragment
+import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
 
@@ -48,15 +49,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.menu_item_chords) {
+
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.getSimpleName())
         }
         if (id == R.id.menu_item_songbooks) {
             App.instance.fragmentManager.changeFragment(SongbookListFragment::class.java, SongbookListFragment::class.java.getSimpleName())
         }
 
+        if ( id == R.id.menu_item_songs )
+        {
+            App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.getSimpleName())
+        }
+
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onBackPressed() {
+        if (App.instance.fragmentManager.fragmentManager.backStackEntryCount==1) {
+            finish()
+        }
+        else {
+            super.onBackPressed()
+        }
     }
 
 }

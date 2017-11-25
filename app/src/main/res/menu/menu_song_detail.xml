@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".main.song.songdetail.SongDetailActivity">
+    <item
+        android:id="@+id/action_edit_song"
+        android:title="Edit song"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_mode_edit_black_24dp"
+        />
+    <item
+        android:id="@+id/action_add_song_to_list"
+        android:title="Add song to list"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_add_black_24dp"
+        />
+    <item
+        android:id="@+id/action_play_song"
+        android:title="Play song"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_play_circle_outline_black_24dp"
+        />
+</menu>
