@@ -12,16 +12,18 @@ import kotlinx.android.synthetic.main.item_song.view.*
 /**
  * A placeholder fragment containing a simple view.
  */
-class SongListActivityFragment : BaseListFragment<Song>() {
+class SongListFragment : BaseListFragment<Song>() {
 
     val mySongs: ArrayList<Song> = ArrayList<Song>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val indices = data?.getIntegerArrayList( INDEX_LIST )
-        for( i in indices!! )
-        {
-            mySongs.add( DataMockup.songs[i] )
+        if (indices==null) {
+            mySongs.addAll(DataMockup.songs)
+        }
+        else {
+            indices.forEach { mySongs.add( DataMockup.songs[it] ) }
         }
     }
 

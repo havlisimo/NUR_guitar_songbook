@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.song.songlist.SongListActivityFragment"
+    tools:context=".main.song.songlist.SongListFragment"
     tools:showIn="@layout/activity_song_list">
 
 </android.support.constraint.ConstraintLayout>
