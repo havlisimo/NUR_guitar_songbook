@@ -2,6 +2,7 @@ package cz.cvut.fit.nurguitarsongbook.main.song.songdetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,13 +11,27 @@ import android.view.View
 import android.view.ViewGroup
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
+import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
 import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
+import cz.cvut.fit.nurguitarsongbook.base.ListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.fragment_song_detail.*
+import kotlinx.android.synthetic.main.item_song_line.view.*
 
+class SongDetailFragment : BaseFragment(), ListFragment<String> {
 
-class SongDetailFragment : BaseFragment() {
+    override fun getData(): MutableList<String> {
+        return song.text.lines().toMutableList()
+    }
+
+    override fun getListItemView(): Int {
+        return R.layout.item_song_line
+    }
+
+    override fun initListItem(holder: BaseAdapter.ViewHolder?, item: String) {
+        holder?.view?.line?.text = item
+    }
 
     lateinit var song: Song
     var songId: Int = 0
@@ -36,6 +51,9 @@ class SongDetailFragment : BaseFragment() {
         tv_song_name.setText( getString( R.string.name ) + ": " + song.name )
         tv_song_artist.setText( getString(R.string.artist ) + ": " + song.artist )
         tv_song_comment.setText( getString(R.string.comment ) + ": " + song.comment )
+        song_text.layoutManager = LinearLayoutManager(activity)
+        song_text.setHasFixedSize(true)
+        song_text.adapter = BaseAdapter<String>(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

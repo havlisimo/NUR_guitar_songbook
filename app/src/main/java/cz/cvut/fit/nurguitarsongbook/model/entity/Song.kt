@@ -6,5 +6,7 @@ package cz.cvut.fit.nurguitarsongbook.model.entity
 class Song(
         var name: String,
         var artist: String,
-        var comment: String
+        var comment: String,
+        var text: String,
+        var chords: List<Pair<Int, String>>
 ) {}
