@@ -21,10 +21,7 @@ object DataMockup {
         list
     }
     val songs: MutableList<Song> by lazy {
-        val list = ArrayList<Song>()
-        list.add(Song("Highway to Hell", "AC/DC", "Moje oblibena <3"))
-        list.add(Song("Rap God", "Eminem", "hehehe"))
-        list
+        SongsMockup.songs
     }
     val onlineSongs: MutableList<Chord> by lazy { ArrayList<Chord>() }
     val songbooks: MutableList<Chord> by lazy { ArrayList<Chord>() }
