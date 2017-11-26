@@ -11,13 +11,13 @@ object DataMockup {
 
     val chords: MutableList<Chord> by lazy {
         val list = ArrayList<Chord>()
-        list.add(Chord("C dur", R.drawable.ic_guitar))
-        list.add(Chord("D dur", R.drawable.ic_guitar))
-        list.add(Chord("E dur", R.drawable.ic_guitar))
-        list.add(Chord("F dur", R.drawable.ic_guitar))
-        list.add(Chord("G dur", R.drawable.ic_guitar))
-        list.add(Chord("A dur", R.drawable.ic_guitar))
-        list.add(Chord("H dur", R.drawable.ic_guitar))
+        list.add(Chord("C", R.drawable.c))
+        list.add(Chord("D", R.drawable.d))
+        list.add(Chord("E", R.drawable.e))
+        list.add(Chord("F", R.drawable.f))
+        list.add(Chord("G", R.drawable.g))
+        list.add(Chord("A", R.drawable.a))
+        list.add(Chord("B", R.drawable.h))
         list
     }
     val songs: MutableList<Song> by lazy {

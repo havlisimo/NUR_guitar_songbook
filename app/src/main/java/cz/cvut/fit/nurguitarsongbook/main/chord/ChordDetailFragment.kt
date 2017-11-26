@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cz.cvut.fit.nurguitarsongbook.MainActivity
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 import cz.cvut.fit.nurguitarsongbook.model.entity.Chord
@@ -26,6 +27,7 @@ class ChordDetailFragment: BaseFragment() {
         chord?.imageRes?.let {
             image.setImageResource(it)
         }
+        (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
     }
 
 
