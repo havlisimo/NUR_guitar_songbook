@@ -1,6 +1,9 @@
 package cz.cvut.fit.nurguitarsongbook.main.chord
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
@@ -14,6 +17,11 @@ import kotlinx.android.synthetic.main.item_chord.view.*
  */
 class ChordListFragment: BaseListFragment<Chord>() {
 
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun getData(): MutableList<Chord> {
         return DataMockup.chords
     }
@@ -22,7 +30,7 @@ class ChordListFragment: BaseListFragment<Chord>() {
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Chord) {
         val view = holder!!.view
-        view.text.text = item.name
+        view.text.text = "${getText(R.string.chord)} ${item.name}"
         view.setOnClickListener {
             val b = Bundle()
             b.putSerializable(EXTRA_CONTENT, item)

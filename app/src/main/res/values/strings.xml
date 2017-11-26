@@ -17,5 +17,6 @@
     <string name="comment">Comment</string>
     <string name="song_playing">Song playing...</string>
     <string name="title_activity_song_list">Songs</string>
+    <string name="chord">Akord</string>
 
 </resources>
