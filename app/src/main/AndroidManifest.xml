@@ -18,10 +18,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailActivity"
-            android:label="@string/title_activity_song_detail"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name="cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongEditActivity"
             android:label="@string/title_activity_song_edit"
             android:theme="@style/AppTheme" />
