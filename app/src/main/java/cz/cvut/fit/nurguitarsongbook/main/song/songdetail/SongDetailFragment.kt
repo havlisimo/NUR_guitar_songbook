@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_song_detail.*
 import kotlinx.android.synthetic.main.item_song_line.view.*
 
 class SongDetailFragment : BaseFragment(), ListFragment<String> {
-    override fun getListItemViewType(): Int = 0
+    override fun getListItemViewType(position: Int): Int = 0
 
     override fun getData(): MutableList<String> {
         return song.text.lines().toMutableList()
@@ -36,11 +36,18 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
 
     lateinit var song: Song
     var songId: Int = 0
+    var songType: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        songId = data!!.getInt(INTENT_SONG_ID, 0);
-        song = DataMockup.songs[songId]
+        songId = data!!.getInt(EXTRA_SONG_ID, 0);
+        songType = data!!.getInt(EXTRA_SONG_TYPE, 0);
+        if (songType == ONLINE) {
+            song = DataMockup.onlineSongs[songId]
+        }
+        if (songType == OFFLINE) {
+            song = DataMockup.songs[songId]
+        }
         setHasOptionsMenu(true)
         App.instance.activity?.setDisplayHomeAsUpEnabled(true)
         return inflater!!.inflate(R.layout.fragment_song_detail, container, false)
@@ -84,11 +91,16 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
 
     companion object {
 
-        private val INTENT_SONG_ID = "song_id"
+        const val OFFLINE = 0
+        const val ONLINE = 1
 
-        fun newDataBundle(songId: Int): Bundle {
+        private val EXTRA_SONG_TYPE = "song_type"
+        private val EXTRA_SONG_ID = "song_id"
+
+        fun newDataBundle(songId: Int, songType: Int = OFFLINE): Bundle {
             val bundle = Bundle()
-            bundle.putInt(INTENT_SONG_ID, songId)
+            bundle.putInt(EXTRA_SONG_ID, songId)
+            bundle.putInt(EXTRA_SONG_TYPE, songType)
             return bundle
         }
     }

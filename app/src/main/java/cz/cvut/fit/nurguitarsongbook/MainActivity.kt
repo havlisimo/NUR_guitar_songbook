@@ -10,8 +10,10 @@ import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
 import cz.cvut.fit.nurguitarsongbook.main.chord.SongbookListFragment
+import cz.cvut.fit.nurguitarsongbook.main.search.SearchFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.main_layout.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         App.instance.fragmentManager.mFragmentManager = fragmentManager
         // Set initial fragment
         if (savedInstanceState == null) {
-            App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.simpleName)
+            App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.simpleName)
         }
         else {
             homeAsUpEnabled = savedInstanceState.getBoolean(HOME_AS_UP)
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         drawer.addDrawerListener(toggle)
+        drawer.nav_view.setCheckedItem(R.id.menu_item_songs)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -81,6 +84,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.getSimpleName())
         }
+        if ( id == R.id.menu_item_search )
+        {
+            App.instance.fragmentManager.changeFragment(SearchFragment::class.java, SearchFragment::class.java.getSimpleName())
+        }
 
         val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
@@ -93,6 +100,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         else {
             super.onBackPressed()
+            when (App.instance.fragmentManager.currentFragment.javaClass) {
+                SearchFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_search)
+                SongListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_songs)
+                ChordListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_chords)
+            }
         }
     }
 

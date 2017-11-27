@@ -3,6 +3,7 @@
 
     <item android:id="@+id/menu_item_search"
         android:title="@string/menu_search"
+        android:icon="@drawable/ic_search"
         android:checkable="true"/>
 
     <item android:id="@+id/menu_item_songbooks"
@@ -11,6 +12,7 @@
 
     <item android:id="@+id/menu_item_songs"
         android:title="@string/menu_songs"
+        android:icon="@drawable/song_note"
         android:checkable="true"/>
 
     <item android:id="@+id/menu_item_chords"
@@ -20,6 +22,7 @@
 
     <item android:id="@+id/menu_item_setting"
         android:title="@string/menu_settings"
+        android:icon="@drawable/ic_settings"
         android:checkable="true"/>
 
 </menu>

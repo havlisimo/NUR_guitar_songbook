@@ -19,6 +19,7 @@ class ChordListFragment: BaseListFragment<Chord>() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_chords)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -31,7 +32,7 @@ class ChordListFragment: BaseListFragment<Chord>() {
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Chord) {
         val view = holder!!.view
         view.text.text = "${getText(R.string.chord)} ${item.name}"
-        view.setOnClickListener {
+        view.card_view.setOnClickListener {
             val b = Bundle()
             b.putSerializable(EXTRA_CONTENT, item)
             App.instance.fragmentManager.changeFragment(ChordDetailFragment::class.java, ChordDetailFragment::class.java.simpleName, b)

@@ -23,9 +23,11 @@ object DataMockup {
         list
     }
     val songs: MutableList<Song> by lazy {
-        SongsMockup.songs
+        SongsMockup.songs.asReversed().toMutableList()
     }
-    val onlineSongs: MutableList<Chord> by lazy { ArrayList<Chord>() }
+    val onlineSongs: MutableList<Song> by lazy { val list = ArrayList<Song>()
+       SongsMockup.songs
+    }
     val songbooks: MutableList<Songbook> by lazy {
         val list = ArrayList<Songbook>()
         list.add(Songbook(1, "aaa", SongbookColor(255, 255, 0, 0)))

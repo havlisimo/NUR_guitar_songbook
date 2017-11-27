@@ -9,7 +9,7 @@ import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
-import kotlinx.android.synthetic.main.item_song.view.*
+import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,19 +32,20 @@ class SongListFragment : BaseListFragment<Song>() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songs)
     }
 
     override fun getData(): MutableList<Song> {
         return mySongs
     }
 
-    override fun getListItemView(viewType: Int): Int = R.layout.item_song
+    override fun getListItemView(viewType: Int): Int = R.layout.item_search_song_offline
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Song) {
         val view = holder!!.view
-        view.song_name.text = item.name
-        view.song_artist.text = item.artist
-        view.setOnClickListener {
+        view.songNameOffline.text = item.name
+        view.songMetaOffline.text = item.artist
+        view.card_view.setOnClickListener {
             App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java,
                 SongDetailFragment::class.java.getSimpleName(),
                 SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item)))
