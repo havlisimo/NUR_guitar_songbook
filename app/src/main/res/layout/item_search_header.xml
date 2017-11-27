@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="4dp"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/container">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,11 +24,11 @@
             android:textSize="16sp"
             tools:text="On Device" />
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:background="@null"
             android:src="@drawable/arrow_up" />
     </FrameLayout>
 

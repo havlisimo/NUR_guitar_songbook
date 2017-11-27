@@ -1,6 +1,15 @@
 package cz.cvut.fit.nurguitarsongbook.main.search
 
+import android.os.Bundle
 import android.support.v7.widget.CardView
+import android.support.v7.widget.SearchView
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
@@ -8,9 +17,15 @@ import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_search_header.view.*
 import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 import kotlinx.android.synthetic.main.item_search_song_online.view.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by tomas on 27.11.2017.
@@ -22,27 +37,80 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
         const val OFFLINE_SONG = 3
         const val ONLINE_SONG = 4
     }
+    private var disposable: Disposable? = null
 
-    private var searchSongs: MutableList<SongSearchWrapper>
+    private var searchString: String = ""
+    private var searchSongs: MutableList<SongSearchWrapper> = getSearchItems("")
+    private var onlineHidden: Boolean = false
+        set(value) {
+            field = value
+            reloadItems()
+        }
 
-    init {
-        searchSongs = getSearchItems("")
+    private var offlineHidden: Boolean = false
+        set(value) {
+            field = value
+            reloadItems()
+        }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_search, menu);
+        val searchView = menu?.findItem(R.id.option_search)?.actionView as SearchView
+        searchView.setIconifiedByDefault(false)
+        disposable = Observable.create<String>({ e ->
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    e.onNext(p0 ?: "" )
+                    return true
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    e.onNext(p0 ?: "" )
+                    return true
+                }
+            })
+        }).debounce(500, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                searchString = it
+                reloadItems()
+            }, { Log.d("SearchFragment", "error", it)})
+
+    }
+
+    private fun reloadItems() {
+        searchSongs = getSearchItems(searchString)
+        (recyclerView.adapter as BaseAdapter<SongSearchWrapper>).data = searchSongs
+        recyclerView.adapter.notifyDataSetChanged()
     }
 
     private fun getSearchItems(searchString: String): MutableList<SongSearchWrapper> {
         val list = ArrayList<SongSearchWrapper>()
         list.add(SongSearchWrapper(OFFLINE_HEADER))
-        list.addAll(DataMockup.songs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(OFFLINE_SONG, it) })
+        if (!offlineHidden) list.addAll(DataMockup.songs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(OFFLINE_SONG, it) })
         list.add(SongSearchWrapper(ONLINE_HEADER))
-        list.addAll(DataMockup.onlineSongs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(ONLINE_SONG, it) })
+        if (!onlineHidden) list.addAll(DataMockup.onlineSongs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(ONLINE_SONG, it) })
         return list
     }
 
     private fun applyFilter(searchString: String, song: Song): Boolean {
+        val searchStringLC = searchString.toLowerCase()
         return (searchString.isBlank()
-            || song.name.contains(searchString)
-            || song.artist.contains(searchString)
-            || song.comment.contains(searchString))
+            || song.name.toLowerCase().contains(searchStringLC)
+            || song.artist.toLowerCase().contains(searchStringLC)
+            || song.comment.toLowerCase().contains(searchStringLC))
     }
 
     override fun getListItemView(viewType: Int): Int {
@@ -65,9 +133,13 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: SongSearchWrapper) {
         if (item.type.equals(OFFLINE_HEADER)) {
             holder?.view?.text?.setText(R.string.search_offline_header)
+            setArrow(holder?.view?.arrow, offlineHidden)
+            holder?.view?.container?.setOnClickListener({ offlineHidden = !offlineHidden })
         }
         if (item.type.equals(ONLINE_HEADER)) {
             holder?.view?.text?.setText(R.string.search_online_header)
+            setArrow(holder?.view?.arrow, onlineHidden)
+            holder?.view?.container?.setOnClickListener({ onlineHidden = !onlineHidden })
         }
         if (item.type.equals(OFFLINE_SONG)) {
             holder?.view?.songNameOffline?.text = item.song?.name
@@ -86,4 +158,15 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
             })
         }
     }
+
+    private fun setArrow(arrow: ImageView?, hidden: Boolean) {
+        if (hidden) {
+            arrow?.setImageResource(R.drawable.arrow_down)
+        }
+        else {
+            arrow?.setImageResource(R.drawable.arrow_up)
+        }
+
+    }
+
 }

@@ -42,10 +42,10 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
         super.onCreateView(inflater, container, savedInstanceState)
         songId = data!!.getInt(EXTRA_SONG_ID, 0);
         songType = data!!.getInt(EXTRA_SONG_TYPE, 0);
-        if (songType.equals(ONLINE)) {
+        if (songType == ONLINE) {
             song = DataMockup.onlineSongs[songId]
         }
-        if (songType.equals(OFFLINE)) {
+        if (songType == OFFLINE) {
             song = DataMockup.songs[songId]
         }
         setHasOptionsMenu(true)
