@@ -13,7 +13,7 @@ class BaseAdapter<T>(val listFragment: ListFragment<T>) : RecyclerView.Adapter<B
     var data: MutableList<T>? = listFragment.getData()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent?.getContext()).inflate(listFragment.getListItemView(), parent, false);
+        val v = LayoutInflater.from(parent?.getContext()).inflate(listFragment.getListItemView(listFragment.getListItemViewType()), parent, false);
         val vh = ViewHolder(v);
         return vh;
     }
@@ -24,6 +24,10 @@ class BaseAdapter<T>(val listFragment: ListFragment<T>) : RecyclerView.Adapter<B
 
     override fun getItemCount(): Int {
         return data?.size ?: 0
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return listFragment.getListItemViewType()
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

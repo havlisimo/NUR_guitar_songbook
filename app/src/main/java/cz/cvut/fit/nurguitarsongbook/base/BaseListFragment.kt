@@ -24,4 +24,8 @@ abstract class BaseListFragment<T>: BaseFragment(), ListFragment<T> {
         recyclerView.adapter = adapter
     }
 
+    override fun getListItemViewType(): Int {
+        return 0
+    }
+
 }

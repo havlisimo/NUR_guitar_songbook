@@ -20,12 +20,13 @@ import kotlinx.android.synthetic.main.fragment_song_detail.*
 import kotlinx.android.synthetic.main.item_song_line.view.*
 
 class SongDetailFragment : BaseFragment(), ListFragment<String> {
+    override fun getListItemViewType(): Int = 0
 
     override fun getData(): MutableList<String> {
         return song.text.lines().toMutableList()
     }
 
-    override fun getListItemView(): Int {
+    override fun getListItemView(viewType: Int): Int {
         return R.layout.item_song_line
     }
 
