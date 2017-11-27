@@ -16,6 +16,14 @@ import kotlinx.android.synthetic.main.main_layout.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    companion object {
+        private const val HOME_AS_UP = "HOME_AS_UP"
+    }
+
+    private var homeAsUpEnabled: Boolean = false
+
+    private lateinit var toggle: ActionBarDrawerToggle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,18 +33,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.simpleName)
         }
+        else {
+            homeAsUpEnabled = savedInstanceState.getBoolean(HOME_AS_UP)
+        }
 
         // Main layout setup
         setSupportActionBar(toolbar)
 
-        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-        val toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
+        toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        toggle.setToolbarNavigationClickListener {
+            if (homeAsUpEnabled) {
+                onBackPressed()
+            }
+        }
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        setDisplayHomeAsUpEnabled(homeAsUpEnabled)
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putBoolean(HOME_AS_UP, homeAsUpEnabled)
+    }
 
     /**
      * Main menu onclick
@@ -61,7 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.getSimpleName())
         }
 
-        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
@@ -73,6 +94,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else {
             super.onBackPressed()
         }
+    }
+
+    fun setDisplayHomeAsUpEnabled(enabled: Boolean) {
+        if ( !enabled ) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(enabled)
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle.setDrawerIndicatorEnabled(true);
+            toggle.syncState();
+
+        }
+        else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.syncState();
+            supportActionBar?.setDisplayHomeAsUpEnabled(enabled)
+        }
+        homeAsUpEnabled = enabled
     }
 
 }

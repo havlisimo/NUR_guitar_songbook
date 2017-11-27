@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.content_song_edit.*
 
 class SongEditActivity : AppCompatActivity() {
 
-    var song: Song = Song(  "", "", "" )
+    lateinit var song: Song
     var songId: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
