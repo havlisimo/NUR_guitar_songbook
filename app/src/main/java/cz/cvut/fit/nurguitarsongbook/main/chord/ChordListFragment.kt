@@ -19,6 +19,7 @@ class ChordListFragment: BaseListFragment<Chord>() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_chords)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

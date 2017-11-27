@@ -20,5 +20,6 @@
     <string name="chord">Akord</string>
     <string name="search_offline_header">On device</string>
     <string name="search_online_header">Online</string>
+    <string name="search_hint">Type to search...</string>
 
 </resources>

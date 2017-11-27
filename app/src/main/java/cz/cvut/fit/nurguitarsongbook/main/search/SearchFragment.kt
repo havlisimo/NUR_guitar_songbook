@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_search_header.view.*
 import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 import kotlinx.android.synthetic.main.item_search_song_online.view.*
+import java.util.Collections
 import java.util.concurrent.TimeUnit
 
 /**
@@ -40,7 +41,7 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
     private var disposable: Disposable? = null
 
     private var searchString: String = ""
-    private var searchSongs: MutableList<SongSearchWrapper> = getSearchItems("")
+    private var searchSongs: MutableList<SongSearchWrapper> = Collections.emptyList()
     private var onlineHidden: Boolean = false
         set(value) {
             field = value
@@ -61,6 +62,8 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_search)
+        reloadItems()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -68,6 +71,8 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
         inflater?.inflate(R.menu.menu_search, menu);
         val searchView = menu?.findItem(R.id.option_search)?.actionView as SearchView
         searchView.setIconifiedByDefault(false)
+        searchView.setQueryHint(getString(R.string.search_hint))
+        searchView.setQuery(searchString, false)
         disposable = Observable.create<String>({ e ->
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -91,9 +96,14 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
     }
 
     private fun reloadItems() {
-        searchSongs = getSearchItems(searchString)
-        (recyclerView.adapter as BaseAdapter<SongSearchWrapper>).data = searchSongs
-        recyclerView.adapter.notifyDataSetChanged()
+        Observable.fromCallable { getSearchItems(searchString) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                searchSongs = it
+                (recyclerView.adapter as BaseAdapter<SongSearchWrapper>).data = searchSongs
+                recyclerView.adapter.notifyDataSetChanged()
+            })
     }
 
     private fun getSearchItems(searchString: String): MutableList<SongSearchWrapper> {
