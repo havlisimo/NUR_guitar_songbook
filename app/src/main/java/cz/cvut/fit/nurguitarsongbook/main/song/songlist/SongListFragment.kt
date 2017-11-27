@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.item_search_song_offline.view.*
  */
 class SongListFragment : BaseSelectableListFragment<Song>() {
 
-    init {
-        selector.isSelectable = true
-    }
+//    init {
+//        selector.isSelectable = true
+//    }
 
     override fun onItemClick(view: View, item: Song) {
         App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java,

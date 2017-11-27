@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main.Songbook
+package cz.cvut.fit.nurguitarsongbook.main.songbook
 
 import android.content.Context
 import android.content.DialogInterface
@@ -23,8 +23,8 @@ import kotlinx.android.synthetic.main.item_chord.view.*
 import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
-
-
+import org.jetbrains.anko.design.longSnackbar
+import org.jetbrains.anko.design.snackbar
 
 
 /**
@@ -75,6 +75,8 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     }
 
     fun toggleSelection() {
+        //return if already selecting
+        if (selector.isSelectable) return
         val a = activity as AppCompatActivity
         a.startSupportActionMode(mDeleteMode)
     }
@@ -124,13 +126,13 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            for (i in DataMockup.songbooks.size - 1 downTo 0) {
-                if (selector.isSelected(i, 0)) {
-                    DataMockup.songbooks.removeAt(i)
-                    adapter.notifyItemRemoved(i)
+            alert("Do you really wish to delete these songbooks?") {
+                yesButton { adapter.deleteSelectedData()
+                    longSnackbar(view, "Undo", "Undo", {adapter.undoDelete()})
                 }
-            }
-            selector.clearSelections()
+                noButton {  }
+            }.show()
+
             mode!!.finish()
             return true
         }
