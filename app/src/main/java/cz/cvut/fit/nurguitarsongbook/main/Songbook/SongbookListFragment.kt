@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main.chord
+package cz.cvut.fit.nurguitarsongbook.main.Songbook
 
 import android.content.Context
 import android.content.DialogInterface
@@ -9,14 +9,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
-import com.bignerdranch.android.multiselector.MultiSelector
 import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.R
-import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
-import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
