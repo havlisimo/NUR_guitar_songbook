@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
+import cz.cvut.fit.nurguitarsongbook.main.chord.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.main.search.SearchFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -74,6 +75,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (id == R.id.menu_item_chords) {
 
             App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.getSimpleName())
+        }
+        if (id == R.id.menu_item_songbooks) {
+            App.instance.fragmentManager.changeFragment(SongbookListFragment::class.java, SongbookListFragment::class.java.getSimpleName())
         }
 
         if ( id == R.id.menu_item_songs )
