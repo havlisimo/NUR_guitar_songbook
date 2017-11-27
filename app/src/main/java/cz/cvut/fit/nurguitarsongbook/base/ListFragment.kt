@@ -8,5 +8,5 @@ interface ListFragment<T> {
     fun getData(): MutableList<T>
     fun getListItemView(viewType: Int): Int
     fun initListItem(holder: BaseAdapter.ViewHolder?, item: T)
-    fun getListItemViewType(): Int
+    fun getListItemViewType(position: Int): Int
 }
