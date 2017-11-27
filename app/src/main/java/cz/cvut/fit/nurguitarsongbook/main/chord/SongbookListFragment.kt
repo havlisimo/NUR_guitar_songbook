@@ -15,6 +15,8 @@ import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
 import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
+import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
+import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
@@ -28,9 +30,10 @@ import kotlinx.android.synthetic.main.dialog_songbook.view.*
 /**
  * Created by vasek on 11/13/2017.
  */
-class SongbookListFragment : BaseListFragment<Songbook>() {
+class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
+    override fun onItemClick(view: View, item: Songbook) {
 
-    private val selector = MultiSelector()
+    }
 
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
         return DataMockup.songbooks
@@ -45,15 +48,19 @@ class SongbookListFragment : BaseListFragment<Songbook>() {
 
     override fun getListItemView(type: Int): Int = R.layout.item_songbok
 
-    override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Songbook) {
+    override fun initListItem(holder: MultiselectAdapter.SelectableViewHolder?, item: Songbook) {
         val view = holder!!.view
         view.text.text = item.name
         val circle = activity.resources.getDrawable(R.drawable.circle_drawable) as GradientDrawable
         circle.setColor(item.color.toArgb())
         view.avatar.background = circle
-        view.setOnClickListener { }
-//        view.setOnLongClickListener(ob)
+        view.setOnLongClickListener( object : View.OnLongClickListener {
+            override fun onLongClick(v: View?): Boolean {
+                selector.isSelectable = true
+                return true
+            }
 
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
