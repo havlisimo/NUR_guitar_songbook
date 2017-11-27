@@ -15,7 +15,7 @@ class MultiselectAdapter<T>(val listFragment: ListFragment<T>, val selector: Mul
     var data: MutableList<T>? = listFragment.getData()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectableViewHolder {
-        val v = LayoutInflater.from(parent?.getContext()).inflate(listFragment.getListItemView(), parent, false);
+        val v = LayoutInflater.from(parent?.getContext()).inflate(listFragment.getListItemView(0), parent, false);
         val vh = SelectableViewHolder(v, selector);
         return vh;
     }
