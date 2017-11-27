@@ -21,5 +21,7 @@
     <string name="search_offline_header">On device</string>
     <string name="search_online_header">Online</string>
     <string name="search_hint">Type to search...</string>
+    <string name="song_downloaded">Song Downloaded</string>
+    <string name="song_already_downloaded">This song is already in your collection</string>
 
 </resources>

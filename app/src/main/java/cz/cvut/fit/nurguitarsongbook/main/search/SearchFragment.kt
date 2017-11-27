@@ -1,6 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.search
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.CardView
 import android.support.v7.widget.SearchView
 import android.util.Log
@@ -166,6 +167,17 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
                 App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
                     SongDetailFragment.newDataBundle(DataMockup.onlineSongs.indexOf(item.song), SongDetailFragment.ONLINE))
             })
+            holder?.view?.downloadButton?.setOnClickListener {
+                val song = item.song
+                if (!DataMockup.songs.contains(song)) {
+                    DataMockup.songs.add(song!!)
+                    Snackbar.make(it, R.string.song_downloaded, Snackbar.LENGTH_SHORT).show()
+                    reloadItems()
+                }
+                else {
+                    Snackbar.make(it, R.string.song_already_downloaded, Snackbar.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
