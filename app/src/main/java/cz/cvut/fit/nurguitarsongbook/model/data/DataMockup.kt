@@ -21,7 +21,7 @@ object DataMockup {
         list
     }
     val songs: MutableList<Song> by lazy {
-        SongsMockup.songs
+        SongsMockup.songs.asReversed().toMutableList()
     }
     val onlineSongs: MutableList<Song> by lazy { val list = ArrayList<Song>()
        SongsMockup.songs

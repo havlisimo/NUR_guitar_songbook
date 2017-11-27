@@ -1,8 +1,11 @@
 package cz.cvut.fit.nurguitarsongbook.main.search
 
+import android.support.v7.widget.CardView
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
 import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
+import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.item_search_header.view.*
@@ -69,10 +72,18 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
         if (item.type.equals(OFFLINE_SONG)) {
             holder?.view?.songNameOffline?.text = item.song?.name
             holder?.view?.songMetaOffline?.text = item.song?.artist ?: ""
+            holder?.view?.findViewById<CardView>(R.id.card_view)?.setOnClickListener({
+                App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
+                    SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item.song), SongDetailFragment.OFFLINE))
+            })
         }
         if (item.type.equals(ONLINE_SONG)) {
             holder?.view?.songNameOnline?.text = item.song?.name
             holder?.view?.songMetaOnline?.text = item.song?.artist ?: ""
+            holder?.view?.findViewById<CardView>(R.id.card_view)?.setOnClickListener({
+                App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
+                    SongDetailFragment.newDataBundle(DataMockup.onlineSongs.indexOf(item.song), SongDetailFragment.ONLINE))
+            })
         }
     }
 }
