@@ -18,5 +18,7 @@
     <string name="song_playing">Song playing...</string>
     <string name="title_activity_song_list">Songs</string>
     <string name="chord">Akord</string>
+    <string name="search_offline_header">On device</string>
+    <string name="search_online_header">Online</string>
 
 </resources>

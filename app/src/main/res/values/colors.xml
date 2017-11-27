@@ -6,9 +6,12 @@
 
     <color name="white">#FFFFFF</color>
 
+    <color name="brick">#FF7043</color>
+    <color name="turquoise">#18FFFF</color>
     <color name="light_blue">#90CAF9</color>
     <color name="dark_blue">#1976D2</color>
     <color name="lightGray">#e0e0e0</color>
     <color name="gray">#bdbdbd</color>
+    <color name="dark_gray">#616161</color>
 
 </resources>

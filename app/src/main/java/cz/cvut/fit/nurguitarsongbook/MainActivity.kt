@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
+import cz.cvut.fit.nurguitarsongbook.main.search.SearchFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_layout.*
@@ -76,6 +77,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if ( id == R.id.menu_item_songs )
         {
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.getSimpleName())
+        }
+        if ( id == R.id.menu_item_search )
+        {
+            App.instance.fragmentManager.changeFragment(SearchFragment::class.java, SearchFragment::class.java.getSimpleName())
         }
 
         val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
