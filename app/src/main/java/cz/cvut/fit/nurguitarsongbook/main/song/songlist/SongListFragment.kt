@@ -38,7 +38,7 @@ class SongListFragment : BaseListFragment<Song>() {
         return mySongs
     }
 
-    override fun getListItemView(): Int = R.layout.item_song
+    override fun getListItemView(viewType: Int): Int = R.layout.item_song
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Song) {
         val view = holder!!.view

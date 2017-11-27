@@ -6,6 +6,7 @@ package cz.cvut.fit.nurguitarsongbook.base
 interface ListFragment<T> {
 
     fun getData(): MutableList<T>
-    fun getListItemView(): Int
+    fun getListItemView(viewType: Int): Int
     fun initListItem(holder: BaseAdapter.ViewHolder?, item: T)
+    fun getListItemViewType(): Int
 }

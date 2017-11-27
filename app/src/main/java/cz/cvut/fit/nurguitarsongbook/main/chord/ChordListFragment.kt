@@ -26,7 +26,7 @@ class ChordListFragment: BaseListFragment<Chord>() {
         return DataMockup.chords
     }
 
-    override fun getListItemView(): Int = R.layout.item_chord
+    override fun getListItemView(viewType: Int): Int = R.layout.item_chord
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Chord) {
         val view = holder!!.view
