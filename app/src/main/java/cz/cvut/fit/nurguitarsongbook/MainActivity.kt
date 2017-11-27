@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         App.instance.fragmentManager.mFragmentManager = fragmentManager
         // Set initial fragment
         if (savedInstanceState == null) {
-            App.instance.fragmentManager.changeFragment(ChordListFragment::class.java, ChordListFragment::class.java.simpleName)
+            App.instance.fragmentManager.changeFragment(SongListFragment::class.java, SongListFragment::class.java.simpleName)
         }
         else {
             homeAsUpEnabled = savedInstanceState.getBoolean(HOME_AS_UP)

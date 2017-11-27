@@ -32,6 +32,7 @@ class SongListFragment : BaseListFragment<Song>() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songs)
     }
 
     override fun getData(): MutableList<Song> {
