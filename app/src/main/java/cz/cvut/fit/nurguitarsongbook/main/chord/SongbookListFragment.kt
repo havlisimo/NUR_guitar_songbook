@@ -1,9 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.chord
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -12,7 +10,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import com.bignerdranch.android.multiselector.MultiSelector
 import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
@@ -25,13 +23,14 @@ import kotlinx.android.synthetic.main.item_chord.view.*
 import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
-import org.w3c.dom.Text
 
 
 /**
  * Created by vasek on 11/13/2017.
  */
 class SongbookListFragment : BaseListFragment<Songbook>() {
+
+    private val selector = MultiSelector()
 
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
         return DataMockup.songbooks
@@ -44,20 +43,22 @@ class SongbookListFragment : BaseListFragment<Songbook>() {
     }
 
 
-    override fun getListItemView(): Int = R.layout.item_chord
+    override fun getListItemView(): Int = R.layout.item_songbok
 
-    override fun initListItem(holder: BaseAdapter.ViewHolder?, item: cz.cvut.fit.nurguitarsongbook.model.entity.Songbook) {
+    override fun initListItem(holder: BaseAdapter.ViewHolder?, item: Songbook) {
         val view = holder!!.view
         view.text.text = item.name
         val circle = activity.resources.getDrawable(R.drawable.circle_drawable) as GradientDrawable
         circle.setColor(item.color.toArgb())
         view.avatar.background = circle
         view.setOnClickListener { }
+//        view.setOnLongClickListener(ob)
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adapter
     }
 
     private fun showCreateSongbookDialog() {

@@ -44,4 +44,5 @@ dependencies {
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
     compile 'org.jetbrains.anko:anko-common:0.10.3'
     compile 'org.jetbrains.anko:anko-design:0.10.3'
+    compile 'com.bignerdranch.android:recyclerview-multiselect:+'
 }
