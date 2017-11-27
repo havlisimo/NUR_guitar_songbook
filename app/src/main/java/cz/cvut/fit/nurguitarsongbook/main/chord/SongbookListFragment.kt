@@ -5,11 +5,13 @@ import android.content.DialogInterface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.ActionMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.R
@@ -25,6 +27,8 @@ import kotlinx.android.synthetic.main.item_chord.view.*
 import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
+
+
 
 
 /**
@@ -56,17 +60,30 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         view.avatar.background = circle
         view.setOnLongClickListener( object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
-                selector.isSelectable = true
+                toggleSelection()
+                selector.setSelected(holder, true)
                 return true
             }
 
         })
     }
 
+//    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//        inflater?.inflate(R.menu.menu_songbook_list, menu)
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter
+//        setHasOptionsMenu(true)
     }
+
+    fun toggleSelection() {
+        val a = activity as AppCompatActivity
+        a.startSupportActionMode(mDeleteMode)
+    }
+
+
 
     private fun showCreateSongbookDialog() {
         val builder = getDialogBuilder(activity)
@@ -107,6 +124,26 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         builder.setView(view)
         builder.setNegativeButton(R.string.songbook_cancel, {dialog, _ -> dialog.dismiss() })
         return builder
+    }
+
+    val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            for (i in DataMockup.songbooks.size - 1 downTo 0) {
+                if (selector.isSelected(i, 0)) {
+                    DataMockup.songbooks.removeAt(i)
+                    adapter.notifyItemRemoved(i)
+                }
+            }
+            selector.clearSelections()
+            mode!!.finish()
+            return true
+        }
+
+        override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
+            super.onCreateActionMode(actionMode, menu)
+            activity.menuInflater.inflate(R.menu.menu_songbook_list, menu)
+            return true
+        }
     }
 
 

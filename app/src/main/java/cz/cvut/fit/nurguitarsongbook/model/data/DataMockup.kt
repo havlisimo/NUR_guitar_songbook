@@ -29,8 +29,8 @@ object DataMockup {
     val songbooks: MutableList<Songbook> by lazy {
         val list = ArrayList<Songbook>()
         list.add(Songbook(1, "aaa", SongbookColor(255, 255, 0, 0)))
-        list.add(Songbook(1, "bbb", SongbookColor(255, 0, 255, 0)))
-        list.add(Songbook(1, "bbb", SongbookColor(255, 0, 0, 255)))
+        list.add(Songbook(2, "bbb", SongbookColor(255, 0, 255, 0)))
+        list.add(Songbook(3, "bbb", SongbookColor(255, 0, 0, 255)))
         list
     }
 
