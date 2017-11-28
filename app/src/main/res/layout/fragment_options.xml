@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/item_text_size"
+        android:id="@+id/item_text_size"/>
     <include layout="@layout/item_backup"
         android:id="@+id/item_backup"/>
     <include layout="@layout/item_restore"

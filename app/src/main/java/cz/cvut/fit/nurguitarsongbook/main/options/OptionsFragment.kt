@@ -17,7 +17,6 @@ import android.widget.Toast
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_options.view.*
-import org.jetbrains.anko.toast
 import yogesh.firzen.filelister.FileListerDialog
 import android.system.Os.mkdir
 import android.text.Editable
@@ -29,10 +28,9 @@ import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
 import kotlinx.android.synthetic.main.dialog_songbook.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
-import org.jetbrains.anko.alert
+import kotlinx.android.synthetic.main.item_text_size.view.*
+import org.jetbrains.anko.*
 import org.jetbrains.anko.design.longSnackbar
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.yesButton
 import java.io.File
 
 
@@ -44,11 +42,39 @@ class OptionsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater!!.inflate(R.layout.fragment_options, container, false)
+        v.item_text_size.ts_desc.text = textSizeToStr(OptionsMockup.songTextSize)
+        v.item_text_size.setOnClickListener{_-> changeTextSize()}
         v.item_backup.setOnClickListener{_-> checkpermissions({createBackup()})}
         v.item_restore.setOnClickListener{_-> checkpermissions({loadBackup()})}
         v.import_song.setOnClickListener{_-> checkpermissions({importSong()})}
         v.import_songbook.setOnClickListener{_-> checkpermissions({importSongbook()}) }
         return v
+    }
+
+    fun textSizeToStr(num : Int) : String {
+        when (num) {
+            14 -> return getString(R.string.options_ts_small)
+            18 ->  return getString(R.string.options_ts_medium)
+            22 ->  return getString(R.string.options_ts_large)
+        }
+        return getString(R.string.options_ts_unk)
+    }
+
+    fun strToTextSize(str : String) : Int {
+        when (str) {
+            getString(R.string.options_ts_small) -> return 14
+            getString(R.string.options_ts_medium) ->  return 18
+            getString(R.string.options_ts_large) ->  return 22
+        }
+        return 14
+    }
+
+    fun changeTextSize() {
+        val sizes = listOf(getString(R.string.options_ts_small), getString(R.string.options_ts_medium), getString(R.string.options_ts_large))
+        selector(getString(R.string.options_ts_dialog), sizes, { intf, i ->
+            OptionsMockup.songTextSize = strToTextSize(sizes[i])
+            view.item_text_size.ts_desc.text = sizes[i]
+        })
     }
 
     fun createBackup() {

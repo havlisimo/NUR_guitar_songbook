@@ -47,7 +47,12 @@
     <string name="options_backup_errors">There were errors when creating backup </string>
     <string name="options_backup_success">Backup created successfully </string>
     <string name="options_backup_exists">File with given name already exists. Are you sure you want to overwite it? </string>
-
+    <string name="options_ts"> Song text size</string>
+    <string name="options_ts_small">Small</string>
+    <string name="options_ts_medium">Medium</string>
+    <string name="options_ts_large">Large</string>
+    <string name="options_ts_unk">Unknown</string>
+    <string name="options_ts_dialog">Please select text size for song lyrics</string>
 
 
 </resources>

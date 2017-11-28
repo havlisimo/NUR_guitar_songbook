@@ -2,6 +2,7 @@ package cz.cvut.fit.nurguitarsongbook.model.data
 
 import android.os.Environment
 import android.provider.ContactsContract
+import cz.cvut.fit.nurguitarsongbook.R.styleable.TextAppearance
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
@@ -12,7 +13,7 @@ import java.io.File
  */
 object OptionsMockup {
 
-    var songTextSize = 11
+    var songTextSize = 14
 
     fun createBackup(path: String) : Boolean {
         val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), path)
