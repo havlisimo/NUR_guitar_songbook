@@ -18,6 +18,7 @@ import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.fragment_song_detail.*
+import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 import kotlinx.android.synthetic.main.item_song_line.view.*
 
 class SongDetailFragment : BaseFragment(), ListFragment<String> {
@@ -63,6 +64,21 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
         song_text.layoutManager = LinearLayoutManager(activity)
         song_text.setHasFixedSize(true)
         song_text.adapter = BaseAdapter<String>(this)
+
+        songbookLabelsDetail?.removeAllViews()
+        if (song.songbooks.size ?: 0 > 0) {
+            val containerWidth = App.convertDpToPixel(80f)
+            var width = containerWidth / (song.songbooks.size ?: 1)
+            if (song.songbooks.size < 5) {
+                width = containerWidth / 5
+            }
+            song.songbooks.forEach {
+                val tv = View(activity)
+                tv.layoutParams = ViewGroup.LayoutParams(width.toInt(), ViewGroup.LayoutParams.MATCH_PARENT)
+                tv.setBackgroundColor(it.color.toArgb())
+                songbookLabelsDetail?.addView(tv)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
