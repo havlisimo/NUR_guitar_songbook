@@ -2,10 +2,9 @@ package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
-import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
-import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
 import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
@@ -24,20 +23,19 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
 
     override fun onItemClick(view: View, item: Song) {
         App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java,
-                SongDetailFragment::class.java.getSimpleName(),
-                SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item)))
+            SongDetailFragment::class.java.getSimpleName(),
+            SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item)))
     }
 
     val mySongs: ArrayList<Song> = ArrayList<Song>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val indices = data?.getIntegerArrayList( INDEX_LIST )
-        if (indices==null) {
+        val indices = data?.getIntegerArrayList(INDEX_LIST)
+        if (indices == null) {
             mySongs.addAll(DataMockup.songs)
-        }
-        else {
-            indices.forEach { mySongs.add( DataMockup.songs[it] ) }
+        } else {
+            indices.forEach { mySongs.add(DataMockup.songs[it]) }
         }
     }
 
@@ -57,6 +55,20 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         val view = holder!!.view
         view.songNameOffline.text = item.name
         view.songMetaOffline.text = item.artist
+        view.songbookLabels?.removeAllViews()
+        if (item.songbooks.size ?: 0 > 0) {
+            val containerWidth = App.convertDpToPixel(80f)
+            var width = containerWidth / (item.songbooks.size ?: 1)
+            if (item.songbooks.size < 5) {
+                width = containerWidth / 5
+            }
+            item.songbooks.forEach {
+                val tv = View(activity)
+                tv.layoutParams = ViewGroup.LayoutParams(width.toInt(), ViewGroup.LayoutParams.MATCH_PARENT)
+                tv.setBackgroundColor(it.color.toArgb())
+                view.songbookLabels?.addView(tv)
+            }
+        }
     }
 
     companion object {
