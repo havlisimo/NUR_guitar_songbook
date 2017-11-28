@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import cz.cvut.fit.nurguitarsongbook.R
 
 import kotlinx.android.synthetic.main.activity_play_song.*
 import kotlinx.android.synthetic.main.content_play_song.*
+import kotlinx.android.synthetic.main.content_song_edit.*
 import java.util.*
 
 class PlaySongActivity : AppCompatActivity() {
 
     var text: String = ""
+    var speed: Int = 1
+    var paused: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,19 +27,51 @@ class PlaySongActivity : AppCompatActivity() {
         song_text.text = text
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_play_song, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_despacito) {
+            if( speed > 1 )
+                speed = speed - 1
+        }
+        if (item?.itemId == R.id.action_play_pause) {
+            if( paused == false )
+            {
+                item.setIcon( R.drawable.ic_play_circle_outline_black_24dp )
+                paused = true
+            }
+            else
+            {
+                item.setIcon( R.drawable.ic_pause_circle_outline_black_24dp )
+                paused = false
+            }
+        }
+        if (item?.itemId == R.id.action_faster) {
+            speed = speed + 1
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     public override fun onResume() {
         super.onResume()
         val autoUpdate = Timer()
         autoUpdate.schedule(object : TimerTask() {
             override fun run() {
-                runOnUiThread { updateHTML() }
+                runOnUiThread { updateScroll() }
             }
-        }, 0, 25) // updates each 40 secs
+        }, 0, 35)
     }
 
-    private fun updateHTML() {
-        textAreaScroller.smoothScrollBy( 0, 1 )
+    private fun updateScroll() {
+        if( !paused )
+            textAreaScroller.smoothScrollBy( 0, speed )
     }
+
+
 
     companion object {
 
