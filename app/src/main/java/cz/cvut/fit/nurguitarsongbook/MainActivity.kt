@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
+import cz.cvut.fit.nurguitarsongbook.main.options.OptionsFragment
 import cz.cvut.fit.nurguitarsongbook.main.search.SearchFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.main_layout.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,6 +90,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
             App.instance.fragmentManager.changeFragment(SearchFragment::class.java, SearchFragment::class.java.getSimpleName())
         }
+        if ( id == R.id.menu_item_setting )
+        {
+            App.instance.fragmentManager.changeFragment(OptionsFragment::class.java, OptionsFragment::class.java.getSimpleName())
+        }
 
         val drawer = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
@@ -132,4 +138,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         homeAsUpEnabled = enabled
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (App.instance.fragmentManager.currentFragment is OptionsFragment)
+        {
+            val fr = App.instance.fragmentManager.currentFragment as OptionsFragment
+            fr.permissionsResult(requestCode, permissions, grantResults)
+        }
+
+    }
 }
