@@ -1,4 +1,4 @@
-package cz.cvut.fit.nurguitarsongbook.main.chord
+package cz.cvut.fit.nurguitarsongbook.main.songbook
 
 import android.content.Context
 import android.content.DialogInterface
@@ -9,16 +9,15 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
-import com.bignerdranch.android.multiselector.MultiSelector
 import com.flask.colorpicker.ColorPickerView
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
-import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
-import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
+import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
+import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
@@ -27,8 +26,8 @@ import kotlinx.android.synthetic.main.item_chord.view.*
 import org.jetbrains.anko.*
 import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
-
-
+import org.jetbrains.anko.design.longSnackbar
+import org.jetbrains.anko.design.snackbar
 
 
 /**
@@ -36,7 +35,11 @@ import kotlinx.android.synthetic.main.dialog_songbook.view.*
  */
 class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     override fun onItemClick(view: View, item: Songbook) {
-
+        val bundle = Bundle()
+        bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
+        App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
+                "Songbook detail", bundle
+                )
     }
 
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
@@ -79,6 +82,8 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     }
 
     fun toggleSelection() {
+        //return if already selecting
+        if (selector.isSelectable) return
         val a = activity as AppCompatActivity
         a.startSupportActionMode(mDeleteMode)
     }
@@ -97,7 +102,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             } else {
                 val name = diag.name.text.toString()
                 val colorPicker = diag.findViewById<View>(R.id.color_picker_view) as ColorPickerView
-                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor)))
+                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor), ArrayList()))
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
@@ -128,13 +133,13 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            for (i in DataMockup.songbooks.size - 1 downTo 0) {
-                if (selector.isSelected(i, 0)) {
-                    DataMockup.songbooks.removeAt(i)
-                    adapter.notifyItemRemoved(i)
+            alert(R.string.songbooks_delete_dialog) {
+                yesButton { adapter.deleteSelectedData()
+                    longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
                 }
-            }
-            selector.clearSelections()
+                noButton {  }
+            }.show()
+
             mode!!.finish()
             return true
         }
