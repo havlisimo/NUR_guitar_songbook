@@ -3,6 +3,7 @@ package cz.cvut.fit.nurguitarsongbook.main.song.songdetail
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +17,7 @@ import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 import cz.cvut.fit.nurguitarsongbook.base.ListFragment
 import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
+import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.fragment_song_detail.*
 import kotlinx.android.synthetic.main.item_search_song_offline.view.*
@@ -33,6 +35,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
     }
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: String) {
+        holder?.view?.line?.setTextSize(TypedValue.COMPLEX_UNIT_SP, OptionsMockup.songTextSize.toFloat())
         holder?.view?.line?.text = item
     }
 

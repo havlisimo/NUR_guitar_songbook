@@ -41,12 +41,7 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val indices = data?.getIntegerArrayList(INDEX_LIST)
-        if (indices == null) {
-            mySongs.addAll(DataMockup.songs)
-        } else {
-            indices.forEach { mySongs.add(DataMockup.songs[it]) }
-        }
+
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -56,6 +51,13 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     }
 
     override fun getData(): MutableList<Song> {
+        mySongs.clear()
+        val indices = data?.getIntegerArrayList(INDEX_LIST)
+        if (indices == null) {
+            mySongs.addAll(DataMockup.songs)
+        } else {
+            indices.forEach { mySongs.add(DataMockup.songs[it]) }
+        }
         return mySongs
     }
 
