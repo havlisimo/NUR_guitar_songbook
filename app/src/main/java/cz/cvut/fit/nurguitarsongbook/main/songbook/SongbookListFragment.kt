@@ -44,7 +44,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         const val MODE_NORMAL = 0
         const val MODE_SELECT_SINGLE = 1
         const val EXTRA_SELECTED_IDS = "selectedIds"
-        const val EXTRA_MODE = "mode"
+        const val EXTRA_MODE = "fr_mode"
     }
 
     var mode: Int = MODE_NORMAL
@@ -62,9 +62,9 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             activity.onBackPressed()
         }
         else {
-            bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
             bundle.putString(SongListFragment.SONGBOOK_NAME, item.name)
             bundle.putInt(SongListFragment.SONGBOOK_ID, item.id)
+            bundle.putInt(SongListFragment.EXTRA_MODE, SongListFragment.MODE_SONGBOOK)
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
                 "Songbook detail", bundle
             )

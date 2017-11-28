@@ -1,6 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.view.Menu
@@ -38,10 +39,49 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
             SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item)))
     }
 
-    val mySongs: ArrayList<Song> = ArrayList<Song>()
+    var mySongs: ArrayList<Song> = ArrayList<Song>()
+
+    var mDeleteMode = object : ModalMultiSelectorCallback(selector) {
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            when (item?.itemId) {
+                R.id.action_delete -> {
+                    if (fr_mode == MODE_NORMAL) deleteSongs(mode)
+                    else removeSongsFromSongbook(mode!!)
+                }
+                R.id.action_add_song_to_list -> addToList(mode)
+            }
+            return true
+        }
+
+        override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
+            super.onCreateActionMode(actionMode, menu)
+            if (fr_mode == MODE_NORMAL)
+                activity.menuInflater.inflate(R.menu.menu_song_list, menu)
+            if (fr_mode == MODE_SONGBOOK)
+                activity.menuInflater.inflate(R.menu.menu_songbook_detail_context, menu)
+
+            return true
+        }
+    }
+
+    private fun removeSongsFromSongbook(mode: ActionMode) {
+        alert(R.string.songbooks_delete_dialog) {
+            yesButton {
+                adapter.deleteSelectedData()
+                DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
+                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {
+                    adapter.undoDelete()
+                    DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
+                })
+                mode!!.finish()
+            }
+            noButton {  }
+        }.show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fr_mode = data?.getInt(EXTRA_MODE) ?: MODE_NORMAL
 
     }
 
@@ -53,14 +93,14 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
 
     override fun getData(): MutableList<Song> {
         mySongs.clear()
-        val indices = data?.getIntegerArrayList(INDEX_LIST)
-        if (indices == null) {
-            mySongs.addAll(DataMockup.songs)
+        if (fr_mode == MODE_NORMAL) {
+            return DataMockup.songs
         } else {
             val sbName = data?.getString(SONGBOOK_NAME)
-            if (sbName != null) App.instance.activity?.supportActionBar?.title = sbName
+            val sbId = data?.getInt(SONGBOOK_ID)
+            App.instance.activity?.supportActionBar?.title = sbName
             (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
-            indices.forEach { mySongs.add(DataMockup.songs[it]) }
+            mySongs.addAll(DataMockup.getSongsForSongbookId(sbId!!))
         }
         return mySongs
     }
@@ -104,22 +144,6 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         a.startSupportActionMode(mDeleteMode)
     }
 
-    val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            when (item?.itemId) {
-                R.id.action_delete -> deleteSongs(mode)
-                R.id.action_add_song_to_list -> addToList(mode)
-            }
-            return true
-        }
-
-        override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
-            super.onCreateActionMode(actionMode, menu)
-            activity.menuInflater.inflate(R.menu.menu_song_list, menu)
-            return true
-        }
-    }
-
     private fun deleteSongs(mode: ActionMode?) {
         alert(R.string.songbooks_delete_dialog) {
             yesButton { adapter.deleteSelectedData()
@@ -143,5 +167,10 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         val INDEX_LIST: String = "indices"
         val SONGBOOK_NAME: String = "sbname"
         val SONGBOOK_ID: String = "sbid"
+        const val MODE_NORMAL = 0
+        const val MODE_SONGBOOK = 1
+        const val EXTRA_MODE = "fr_mode"
     }
+
+    var fr_mode: Int = MODE_NORMAL
 }
