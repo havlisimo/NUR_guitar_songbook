@@ -127,4 +127,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         homeAsUpEnabled = enabled
     }
 
+    fun showToolbar(show: Boolean) {
+        if (show) {
+            supportActionBar?.show()
+        }
+        else {
+            supportActionBar?.hide()
+        }
+    }
+
+
 }
