@@ -28,13 +28,20 @@
     <string name="search_offline_header">On device</string>
     <string name="search_online_header">Online</string>
     <string name="search_hint">Type to search...</string>
+    <string name="song_downloaded">Song Downloaded</string>
+    <string name="song_already_downloaded">This song is already in your collection</string>
     <string name="undo">UNDO</string>
     <string name="undo_songbook_deletion">Undo songbook deletion</string>
+    <string name="undo_song_deletion">Undo song deletion</string>
     <string name="songbooks_delete_dialog">Are you sure you want to delete selected songbooks?</string>
     <string name="options_backup">Backup</string>
     <string name="options_backup_desc">Will generate backup file</string>
     <string name="options_backup_dialog">Will generate backup file</string>
     <string name="options_restore">Restore</string>
+    <string name="songs_delete_dialog">Are you sure you want to delete selected songs?</string>
+    <string name="added_to_songbook">Successfully added to songbook</string>
+    <string name="song_add_to">Add to</string>
+    <string name="delete">Detele</string>
     <string name="options_restore_desc">From previously created backup</string>
     <string name="options_import_song">Import Song</string>
     <string name="options_import_song_formats">Supported formats: Json, Agama </string>
@@ -53,6 +60,5 @@
     <string name="options_ts_large">Large</string>
     <string name="options_ts_unk">Unknown</string>
     <string name="options_ts_dialog">Please select text size for song lyrics</string>
-
 
 </resources>

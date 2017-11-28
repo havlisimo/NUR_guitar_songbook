@@ -1,17 +1,12 @@
 package cz.cvut.fit.nurguitarsongbook.base
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.MultiSelectorBindingHolder
-import com.bignerdranch.android.multiselector.SwappingHolder
-import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import kotlinx.android.synthetic.main.item_songbok.view.*
-import org.jetbrains.anko.*
-import java.util.ArrayList
 
 /**
  * Created by tomas on 01.11.2017.
@@ -53,6 +48,10 @@ class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val sel
             }
         }
         selector.clearSelections()
+    }
+
+    fun getSelectedItems(): List<T> {
+        return data!!.filterIndexed({index, item -> selector.isSelected(index, 0)})
     }
 
     fun undoDelete() {

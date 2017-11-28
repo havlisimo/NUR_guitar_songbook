@@ -8,8 +8,7 @@
 
     <item android:id="@+id/menu_item_songbooks"
         android:title="@string/menu_songbooks"
-        android:icon="@drawable/ic_clipboard"
-        android:checkable="true"/>
+        android:icon="@drawable/ic_songbook"/>
 
     <item android:id="@+id/menu_item_songs"
         android:title="@string/menu_songs"

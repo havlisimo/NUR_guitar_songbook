@@ -24,7 +24,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:id="@+id/avatar"
-                android:src="@drawable/ic_clipboard"
+                android:src="@drawable/ic_songbook"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/background_circle_blue"

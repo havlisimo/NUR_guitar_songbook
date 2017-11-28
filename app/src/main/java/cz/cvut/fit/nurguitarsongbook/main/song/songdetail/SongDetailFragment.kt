@@ -14,6 +14,7 @@ import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
 import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
 import cz.cvut.fit.nurguitarsongbook.base.ListFragment
+import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.fragment_song_detail.*
@@ -67,6 +68,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.menu_song_detail, menu)
+        menu?.findItem(R.id.action_edit_song)?.setVisible(songType.equals(OFFLINE))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -74,7 +76,10 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
             startActivityForResult( SongEditActivity.newIntent( activity, songId ), 0 );
         }
         if (item?.itemId == R.id.action_add_song_to_list) {
-            //TODO: Add song to list
+                val bundle = Bundle()
+                bundle.putInt(SongbookListFragment.EXTRA_MODE, SongbookListFragment.MODE_SELECT_SINGLE)
+                bundle.putIntegerArrayList(SongbookListFragment.EXTRA_SELECTED_IDS, arrayListOf(songId))
+                App.instance.fragmentManager.changeFragment(SongbookListFragment::class.java, SongbookListFragment::class.java.getSimpleName(), bundle)
         }
         if (item?.itemId == R.id.action_play_song) {
             startActivity( PlaySongActivity.newIntent( activity ) )

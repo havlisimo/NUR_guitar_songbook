@@ -10,9 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import cz.cvut.fit.nurguitarsongbook.main.chord.ChordListFragment
 import cz.cvut.fit.nurguitarsongbook.main.options.OptionsFragment
-import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.main.search.SearchFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
+import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.main_layout.*
@@ -101,6 +101,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers()
+            return
+        }
         if (App.instance.fragmentManager.fragmentManager.backStackEntryCount==1) {
             finish()
         }
@@ -110,6 +114,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 SearchFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_search)
                 SongListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_songs)
                 ChordListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_chords)
+                SongbookListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_songbooks)
             }
         }
     }

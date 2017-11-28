@@ -9,37 +9,64 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
-import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
 import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
 import kotlinx.android.synthetic.main.dialog_songbook.*
-import kotlinx.android.synthetic.main.item_chord.view.*
-import org.jetbrains.anko.*
-import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
+import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
+import kotlinx.android.synthetic.main.item_chord.view.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.design.longSnackbar
-import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.yesButton
 
 
 /**
  * Created by vasek on 11/13/2017.
  */
 class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
+
+    companion object {
+        const val MODE_NORMAL = 0
+        const val MODE_SELECT_SINGLE = 1
+        const val EXTRA_SELECTED_IDS = "selectedIds"
+        const val EXTRA_MODE = "mode"
+    }
+
+    var mode: Int = MODE_NORMAL
+
     override fun onItemClick(view: View, item: Songbook) {
         val bundle = Bundle()
-        bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
-        App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
+        if (mode == MODE_SELECT_SINGLE) {
+            val list = data?.getIntegerArrayList(EXTRA_SELECTED_IDS)
+            list?.forEach {
+                if (!item.songIds.contains(it)) {
+                    item.songIds.add(it)
+                }
+            }
+            longSnackbar(view, R.string.added_to_songbook)
+            activity.onBackPressed()
+        }
+        else {
+            bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
+            App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
                 "Songbook detail", bundle
-                )
+            )
+        }
     }
 
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
@@ -52,6 +79,17 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         return v
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mode = data?.getInt(EXTRA_MODE) ?: MODE_NORMAL
+        if (mode== MODE_SELECT_SINGLE) {
+            App.instance.activity?.supportActionBar?.setTitle(R.string.song_add_to)
+        }
+        else {
+            App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songbooks)
+        }
+    }
+
 
     override fun getListItemView(type: Int): Int = R.layout.item_songbok
 
@@ -61,14 +99,15 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         val circle = activity.resources.getDrawable(R.drawable.circle_drawable) as GradientDrawable
         circle.setColor(item.color.toArgb())
         view.avatar.background = circle
-        view.setOnLongClickListener( object : View.OnLongClickListener {
-            override fun onLongClick(v: View?): Boolean {
-                toggleSelection()
-                selector.setSelected(holder, true)
-                return true
-            }
-
-        })
+        if (mode== MODE_NORMAL) {
+            view.setOnLongClickListener(object : View.OnLongClickListener {
+                override fun onLongClick(v: View?): Boolean {
+                    toggleSelection()
+                    selector.setSelected(holder, true)
+                    return true
+                }
+            })
+        }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -133,14 +172,9 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            alert(R.string.songbooks_delete_dialog) {
-                yesButton { adapter.deleteSelectedData()
-                    longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
-                }
-                noButton {  }
-            }.show()
-
-            mode!!.finish()
+            when (item?.itemId) {
+                R.id.action_delete -> deleteSongs(mode)
+            }
             return true
         }
 
@@ -150,9 +184,15 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             return true
         }
     }
-
-
-
+    private fun deleteSongs(mode: ActionMode?) {
+        alert(R.string.songbooks_delete_dialog) {
+            yesButton { adapter.deleteSelectedData()
+                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
+                mode!!.finish()
+            }
+            noButton {  }
+        }.show()
+    }
 
 
 }
