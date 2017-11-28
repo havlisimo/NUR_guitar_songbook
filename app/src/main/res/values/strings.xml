@@ -40,6 +40,13 @@
     <string name="options_import_song_formats">Supported formats: Json, Agama </string>
     <string name="options_import_songbooks_formats">Supported formats: Json, Agama </string>
     <string name="options_import_songbooks">Import Song List </string>
+    <string name="options_file_review">Import NOT successful! Please review that selected file has correct format. </string>
+    <string name="options_file_import_success">Import successful!! </string>
+    <string name="options_file_name">File name cannot be empty </string>
+    <string name="options_backup_name">Backup file name </string>
+    <string name="options_backup_errors">There were errors when creating backup </string>
+    <string name="options_backup_success">Backup created successfully </string>
+    <string name="options_backup_exists">File with given name already exists. Are you sure you want to overwite it? </string>
 
 
 
