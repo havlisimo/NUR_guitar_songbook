@@ -8,7 +8,10 @@ import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 object SongsMockup {
     val songs: MutableList<Song> by lazy {
         val list = ArrayList<Song>()
-        list.add(Song("Highway to Hell", "AC/DC", "Moje oblibena <3", "(A, D, G, D, G, D, G, D, A)\n" +
+        for (i in 1..10) {
+            list.add(Song(DataMockup.getSongId(), "name ${i}", "artist ${i}", "comment ${i}", "text ${i}", ArrayList()))
+        }
+        list.add(Song(DataMockup.getSongId(), "Highway to Hell", "AC/DC", "Moje oblibena <3", "(A, D, G, D, G, D, G, D, A)\n" +
             "\n" +
             "\n" +
             "\n" +
@@ -71,7 +74,7 @@ object SongsMockup {
             "And I'm going down, all the way\n" +
             "\n" +
             "I'm on the highway to hell\n", ArrayList()))
-        list.add(Song("Rap God", "Eminem", "hehehe", "Look, I was gonna go easy on you and not to hurt your feelings\n" +
+        list.add(Song(DataMockup.getSongId(), "Rap God", "Eminem", "hehehe", "Look, I was gonna go easy on you and not to hurt your feelings\n" +
             "But I'm only going to get this one chance\n" +
             "Something's wrong, I can feel it (Six minutes, Slim Shady, you're on)\n" +
             "Just a feeling I've got, like something's about to happen, but I don't know what\n" +

@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.MultiSelectorBindingHolder
 import com.bignerdranch.android.multiselector.SwappingHolder
+import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import kotlinx.android.synthetic.main.item_songbok.view.*
 import org.jetbrains.anko.*
+import java.util.ArrayList
 
 /**
  * Created by tomas on 01.11.2017.
@@ -17,6 +19,7 @@ import org.jetbrains.anko.*
 class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val selector: MultiSelector) : RecyclerView.Adapter<MultiselectAdapter.SelectableViewHolder>() {
 
     var data: MutableList<T>? = listFragment.getData()
+    var deletedData: MutableMap<Int, T> = HashMap()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectableViewHolder {
         val v = LayoutInflater.from(parent?.getContext()).inflate(listFragment.getListItemView(0), parent, false);
@@ -35,6 +38,29 @@ class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val sel
 
     override fun getItemCount(): Int {
         return data?.size ?: 0
+    }
+
+    fun purgeData() {
+        deletedData.clear()
+    }
+
+    fun deleteSelectedData() {
+        purgeData()
+        for (i in data!!.size - 1 downTo 0) {
+            if (selector.isSelected(i, 0)) {
+                deletedData.put(i, data!!.removeAt(i))
+                notifyItemRemoved(i)
+            }
+        }
+        selector.clearSelections()
+    }
+
+    fun undoDelete() {
+        for (key in deletedData.keys) {
+            deletedData[key]?.let { data!!.add(key, it) }
+            notifyItemInserted(key)
+        }
+        purgeData()
     }
 
     class SelectableViewHolder(val view: View, val selector: MultiSelector) : MultiSelectorBindingHolder(view, selector) {
