@@ -51,7 +51,7 @@ class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val sel
     }
 
     fun getSelectedItems(): List<T> {
-        return data!!.filterIndexed({index, item -> selector.isSelected(index, 0)})
+        return data!!.filterIndexed({index, item -> selector.selectedPositions.contains(index)})
     }
 
     fun undoDelete() {

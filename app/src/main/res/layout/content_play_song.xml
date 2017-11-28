@@ -8,9 +8,19 @@
     tools:context=".main.song.songdetail.PlaySongActivity"
     tools:showIn="@layout/activity_play_song">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/song_playing"/>
+    <ScrollView android:id="@+id/textAreaScroller"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+        <TextView
+            android:id="@+id/song_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/song_playing" />
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
