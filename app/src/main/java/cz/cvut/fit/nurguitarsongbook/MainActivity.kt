@@ -108,6 +108,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 SearchFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_search)
                 SongListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_songs)
                 ChordListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_chords)
+                SearchFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_search)
+                SongbookListFragment::class.java -> drawerLayout.nav_view.setCheckedItem(R.id.menu_item_songbooks)
             }
         }
     }

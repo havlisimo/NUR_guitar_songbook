@@ -13,6 +13,7 @@ class Song(
     var text: String,
     var chords: List<Pair<Int, String>>
 ) {
-    val songbooks: List<Songbook> by lazy { DataMockup.songbooks.filter { it.songIds.contains(id) } }
+    val songbooks: List<Songbook>
+        get() = DataMockup.songbooks.filter { it.songIds.contains(id) }
 
 }
