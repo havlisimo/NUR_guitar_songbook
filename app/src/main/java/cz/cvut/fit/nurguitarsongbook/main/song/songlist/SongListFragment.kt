@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import cz.cvut.fit.nurguitarsongbook.App
+import cz.cvut.fit.nurguitarsongbook.MainActivity
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
@@ -56,6 +57,9 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         if (indices == null) {
             mySongs.addAll(DataMockup.songs)
         } else {
+            val sbName = data?.getString(SONGBOOK_NAME)
+            if (sbName != null) App.instance.activity?.supportActionBar?.title = sbName
+            (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
             indices.forEach { mySongs.add(DataMockup.songs[it]) }
         }
         return mySongs
@@ -137,5 +141,7 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     companion object {
 
         val INDEX_LIST: String = "indices"
+        val SONGBOOK_NAME: String = "sbname"
+        val SONGBOOK_ID: String = "sbid"
     }
 }

@@ -63,6 +63,8 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         }
         else {
             bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
+            bundle.putString(SongListFragment.SONGBOOK_NAME, item.name)
+            bundle.putInt(SongListFragment.SONGBOOK_ID, item.id)
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
                 "Songbook detail", bundle
             )
@@ -81,9 +83,11 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.instance.activity?.setDisplayHomeAsUpEnabled(false)
         mode = data?.getInt(EXTRA_MODE) ?: MODE_NORMAL
         if (mode== MODE_SELECT_SINGLE) {
             App.instance.activity?.supportActionBar?.setTitle(R.string.song_add_to)
+            App.instance.activity?.setDisplayHomeAsUpEnabled(true)
         }
         else {
             App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songbooks)
