@@ -8,9 +8,6 @@ import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 object SongsMockup {
     val songs: MutableList<Song> by lazy {
         val list = ArrayList<Song>()
-        for (i in 1..10) {
-            list.add(Song(DataMockup.getSongId(), "name ${i}", "artist ${i}", "comment ${i}", "text ${i}", ArrayList()))
-        }
         list.add(Song(DataMockup.getSongId(), "Highway to Hell", "AC/DC", "Moje oblibena <3", "(A, D, G, D, G, D, G, D, A)\n" +
             "\n" +
             "\n" +
@@ -229,6 +226,438 @@ object SongsMockup {
             "And take a vacation to trip a broad\n" +
             "And make her fall on her face and don't be a retard\n" +
             "Be a king? Think not, why be a king when you can be a God?", ArrayList()))
+        list.add(Song(DataMockup.getSongId(), "Thunderstruck", "AC/DC", "",
+                "[Intro]\n" +
+                "\n" +
+                "N.C.\n" +
+                "A-ha,ha,ha.    A-ha,ha,ha.    A-ha,ha,ha.\n" +
+                "N.C.\n" +
+                "A-ha,ha,ha. A-ha,ha,ha. A-ha,ha,ha. A-ha,ha,ha.\n" +
+                "N.C.\n" +
+                "Thunder. (A-ha,ha,ha) [play 6 times]\n" +
+                "N.C.\n" +
+                "Thunder. Thunder. Thunder. Thunder\n" +
+                "\n" +
+                "\n" +
+                "[Verse 1] \n" +
+                "    \n" +
+                "N.C.    \n" +
+                "I was caught in the middle of a railroad track, (Thunder)\n" +
+                "N.C.\n" +
+                "I looked 'round and i knew there was no turning back. (Thunder)\n" +
+                "N.C.\n" +
+                "My mind raced and i thought, what could i do? (Thunder)\n" +
+                "N.C.\n" +
+                "And i knew there was no help, no help from you. (Thunder)\n" +
+                "                  B5  E5            B5     A5 E5  A5\n" +
+                "Sound of the drums    beatin' in my heart,\n" +
+                "    E5         B5   E5        B5     \n" +
+                "E5 A5 E5\n" +
+                "             The thunder of guns tore me a-part.\n" +
+                "\n" +
+                "                         \n" +
+                "[Link 1]\n" +
+                "\n" +
+                "B5\n" +
+                "You've been thunderstruck.\n" +
+                "\n" +
+                "\n" +
+                "[Verse 2]\n" +
+                "\n" +
+                "B5\n" +
+                "Rode down the highway, broke the limit, we hit the town.\n" +
+                "B5\n" +
+                "Went through to Texas, yeah Texas and we had some fun.\n" +
+                "B5\n" +
+                "We met some girls, some dancers who gave a good time.\n" +
+                "B5\n" +
+                "Broke all the rules, played all the fools, yeah, yeah,\n" +
+                "                                 B5 A5 E5\n" +
+                "They, they, they blew our minds.\n" +
+                "\n" +
+                "\n" +
+                "[Pre-Chorus]\n" +
+                "\n" +
+                "(E5)                        A5 B5 A5 E5\n" +
+                "I was shakin' at the knees,\n" +
+                "                            A5 B5 A5 E5\n" +
+                "Could i come agaim please?\n" +
+                "                               A5 B5 A5 E5\n" +
+                "Yeah the ladies were too kind,\n" +
+                "\n" +
+                "You've been...\n" +
+                "\n" +
+                "                         \n" +
+                "[Chorus]                         \n" +
+                "                         \n" +
+                "        B5     A5 E5  A5 E5\n" +
+                "Thunder-struck,\n" +
+                "        B5     A5 E5\n" +
+                "Thunder-struck.\n" +
+                "A5          E5            B5      A5 E5\n" +
+                "Yeah, yeah, yeah, thunder-struck,\n" +
+                "A5           B5      A5 E5  A5 E5\n" +
+                "Ooh, thunder-struck.\n" +
+                "\n" +
+                "\n" +
+                "[Link 2]\n" +
+                "\n" +
+                "|B5   |B5   |B5   |B5   ||\n" +
+                "\n" +
+                "                         \n" +
+                "[Pre-Chorus]                     \n" +
+                "                         \n" +
+                "B5 A5 B5                               B5 A5  B5\n" +
+                "       Well i was shaking at the knees,\n" +
+                "\n" +
+                "Could i come again please?\n" +
+                "\n" +
+                "\n" +
+                "[Solo]  \n" +
+                "   \n" +
+                "|E5 B5  |A5 E5  |E5 \n" +
+                "|A5 E5  |\n" +
+                "|B5 A5  |\n" +
+                "     la la\n" +
+                "\n" +
+                "         \n" +
+                "[Bridge]\n" +
+                "         \n" +
+                "(B5)                     B5 A5\n" +
+                "La,la,la,la,la,la,la,la.\n" +
+                "(B5)                     B5 A5\n" +
+                "La,la,la,la,la,la,la,la.\n" +
+                "(B5)                     B5 A5\n" +
+                "La,la,la,la,la,la,la,la.\n" +
+                "(B5)\n" +
+                "La,la,la,la,la,la,la,la.\n" +
+                "\n" +
+                "\n" +
+                "[Chorus]\n" +
+                "\n" +
+                "        B5      A5 E5 A5 E5\n" +
+                "Thunder-struck,\n" +
+                "        B5      A5 E5\n" +
+                "Thunder-struck,\n" +
+                "A5          E5            B5      A5  E5 A5  E5\n" +
+                "Yeah, yeah, yeah, thunder-struck,\n" +
+                "        B5      A5 E5\n" +
+                "Thunder-struck,\n" +
+                "A5          E5\n" +
+                "Yeah, yeah, yeah\n" +
+                "     B5           E5     B5          E5\n" +
+                "Said yeah, its al-right, we're doing fine.\n" +
+                "B5            E5     B5          E5\n" +
+                "Yeah, it's al-right, we're doing fine, so fine.\n" +
+                "\n" +
+                "        B5      A5 D5 E5\n" +
+                "Thunder-struck,\n" +
+                "A5          E5            B5 A5  E5    A5      E5\n" +
+                "Yeah, yeah, yeah, thunder-struck,       thunder-struck\n" +
+                "        B5    A5        E5   A5    E5         B5     A5 E5\n" +
+                "Thunder-struck,  whoa,  baby,   ba-by, thunder-struck.\n" +
+                "A5     B5           B5     A5  E5 A5  E5\n" +
+                "You've been thunder-struck.\n" +
+                "        B5     A5 E5 A5 E5\n" +
+                "Thunder-struck,\n" +
+                "        B5     A5 E5 A5 E5\n" +
+                "Thunder-struck,\n" +
+                "        B5     A5 E5 A5 E5\n" +
+                "Thunder-struck,\n" +
+                "A5     B5           B5\n" +
+                "You've been thunder-struck.\n" +
+                "\n" +
+                "\n" +
+                "Words and music by\n" +
+                "A.Young and M.Young", ArrayList()))
+        list.add(Song(DataMockup.getSongId(), "Back in black", "AC/DC", "",
+                "[Verse]\n" +
+                        "\n" +
+                        "E              \n" +
+                        "Back in black\n" +
+                        "D               \n" +
+                        "I hit the sack\n" +
+                        "A/C#                                    \n" +
+                        "I've been too long I'm glad to be back\n" +
+                        "\n" +
+                        "        E         \n" +
+                        "Yes, I'm let loose\n" +
+                        "D               \n" +
+                        "From the noose\n" +
+                        "A/C#                          \n" +
+                        "That's kept me hanging about\n" +
+                        "\n" +
+                        "            E                \n" +
+                        "I've been l-ooking at the sky\n" +
+                        "           D               \n" +
+                        "'Cause it's gettin' me high\n" +
+                        "A/C#                                  \n" +
+                        "Forget the hearse 'cause I never die\n" +
+                        "\n" +
+                        "     E          \n" +
+                        "I got nine lives\n" +
+                        "D           \n" +
+                        "Cat's eyes\n" +
+                        "A/C#                                       \n" +
+                        "Abusin' every one of them and running wild\n" +
+                        "\n" +
+                        "\n" +
+                        "[Chorus]\n" +
+                        "\n" +
+                        "                A E  B  A  B\n" +
+                        "'Cause I'm back             \n" +
+                        "              A E  B  A  B\n" +
+                        "Yes, I'm back             \n" +
+                        "               G  D  A  G  A\n" +
+                        "Well, I'm back              \n" +
+                        "              G  D  A  G  A\n" +
+                        "Yes, I'm back              \n" +
+                        "          A  E  B  A  B   A  E  B  A  B \n" +
+                        "Well, I'm ba--a--a--a-ck, ba--a--a--a-ck\n" +
+                        "             G           \n" +
+                        "(Well) I'm b-ack in black\n" +
+                        "             D          \n" +
+                        "Yes, I'm  ba-ck in black\n" +
+                        "\n" +
+                        "\n" +
+                        "[Verse]\n" +
+                        "\n" +
+                        "E               \n" +
+                        "Back in the back\n" +
+                        "    D        \n" +
+                        "Of a cadillac\n" +
+                        "       A/C#                              \n" +
+                        "Number one with a bullet, Im a power pack\n" +
+                        "\n" +
+                        "        E         \n" +
+                        "Yes, I'm in a bang\n" +
+                        "D            \n" +
+                        "  With a gang\n" +
+                        "A/C#                                          \n" +
+                        "Theyve got to catch me if they want me to hang\n" +
+                        "\n" +
+                        "           E               \n" +
+                        "Cause Im b-ack on the track\n" +
+                        "      D                 \n" +
+                        "And I-m beatin the flack\n" +
+                        "   A/C#                             \n" +
+                        "No-bodys gonna get me on another rap\n" +
+                        "\n" +
+                        "     E            \n" +
+                        "So l-ook at me now\n" +
+                        "       D              \n" +
+                        "Im jus-t makin my play\n" +
+                        "     A/C#                                         \n" +
+                        "Dont try to push your luck, just get out of my way\n" +
+                        "\n" +
+                        "\n" +
+                        "[Chorus]\n" +
+                        "\n" +
+                        "                A E  B  A  B\n" +
+                        "'Cause I'm back             \n" +
+                        "              A E  B  A  B\n" +
+                        "Yes, I'm back             \n" +
+                        "               G  D  A  G  A\n" +
+                        "Well, I'm back              \n" +
+                        "              G  D  A  G  A\n" +
+                        "Yes, I'm back              \n" +
+                        "                     A E  B  A  B\n" +
+                        "Well, I'm back, back             \n" +
+                        "                         A E  B  A  B \n" +
+                        "(Well) I'm back in black              \n" +
+                        "G        D             \n" +
+                        "Yes, I'm  back in black\n" +
+                        "\n" +
+                        "\n" +
+                        "[Lead]\n" +
+                        "\n" +
+                        "E D A/C# \n" +
+                        "        \n" +
+                        " \n" +
+                        "[Chorus]\n" +
+                        "\n" +
+                        "A  E   B   A    B\n" +
+                        "'C-ause I'm bac-k\n" +
+                        "              A E  B  A  B\n" +
+                        "Yes, I'm back             \n" +
+                        "              G  D  A  G  A\n" +
+                        "Well, I'm back              \n" +
+                        "              G  D  A  G  A\n" +
+                        "Yes, I'm back              \n" +
+                        "          A  E  B  A  B   A  E  B  A  B \n" +
+                        "Well, I'm ba--a--a--a-ck, ba--a--a--a-ck\n" +
+                        "             G           \n" +
+                        "(Well) I'm b-ack in black\n" +
+                        "             D          \n" +
+                        "Yes, I'm  ba-ck in black\n" +
+                        "\n" +
+                        "\n" +
+                        "[Riffs]\n" +
+                        "\n" +
+                        "A E  B  A  B A \n" +
+                        "A E  B  A  B A\n" +
+                        "          A E  B  A  B A\n" +
+                        "hooo yeah               \n" +
+                        "         A E  B  A  B\n" +
+                        "Ohh yeah             \n" +
+                        "         G  D  A  G  A\n" +
+                        "Yes I am              \n" +
+                        "         G  D  A  G  A \n" +
+                        "Oh yeah                \n" +
+                        "A E  B  A  B A \n" +
+                        "A E  B  A  B A\n" +
+                        "    \n" +
+                        "          \n" +
+                        "[Outro]\n" +
+                        "\n" +
+                        "          A  E  B  A  B   A  E  B  A  B \n" +
+                        "Well, I'm ba--a--a--a-ck, ba--a--a--a-ck\n" +
+                        "  G D A G  A    G D A G  A\n" +
+                        "B-a-a-a-ac-k, b-a-a-a-ac-k\n" +
+                        "        A  E  B  A  B   A  E  B  A  B \n" +
+                        "Yes I'm ba--a--a--a-ck, ba--a--a--a-ck\n" +
+                        "          G            \n" +
+                        "Yes.  I'm back in black\n" +
+                        "             D          \n" +
+                        "Yes, I'm  ba-ck in black\n" +
+                        "\n" +
+                        "C  B \n" +
+                        "    \n" +
+                        "Outta the sack!\n" +
+                        "\n" +
+                        "E D A/C#    \n" +
+                        "(repeat to end)", ArrayList()))
+        list.add(Song(DataMockup.getSongId(), "TNT", "AC/DC", "",
+                "[Intro]\n" +
+                        "\n" +
+                        " E    G  A    G   E   G  A     G    E     G   A   G   E    G    A\n" +
+                        "   Oi, oi, oi,   oi, oi, oi, oi,   oi, oi, oi, oi,   oi, oi, oi, oi,\n" +
+                        "\n" +
+                        "\n" +
+                        "[Verse]\n" +
+                        "\n" +
+                        "G           E          G     A\n" +
+                        " See me ride out of that sunset\n" +
+                        "G        E         G    A     G\n" +
+                        " On your, color TV screen\n" +
+                        "E            G          A     G\n" +
+                        " Out for all that I can get\n" +
+                        "E            G        A       G\n" +
+                        " If you know what I mean\n" +
+                        "E            G        A       G\n" +
+                        " Women to the left of me\n" +
+                        "E            G       A        G\n" +
+                        " And women to the right\n" +
+                        "E                   G      A           G\n" +
+                        " Ain't got no gun, ain't got no knife\n" +
+                        "E            G        A~\n" +
+                        " Don't you start no fight\n" +
+                        "     \n" +
+                        "\n" +
+                        "[Chorus]\n" +
+                        "\n" +
+                        "          A G E\n" +
+                        "Cause I'm T.N.T\n" +
+                        "\n" +
+                        "I'm dynamite\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "And I'll win the fight\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "I'm a power load\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "   G        A~\n" +
+                        "Watch me explode\n" +
+                        "\n" +
+                        "\n" +
+                        "[Instrumental]\n" +
+                        "\n" +
+                        "E   G  A  G  E   G  A  G  E   G  A  G  E  G  A  \n" +
+                        "\n" +
+                        "\n" +
+                        "[Verse]\n" +
+                        "\n" +
+                        "G          E               G     A    G\n" +
+                        " I'm dirty, mean and mighty unclean\n" +
+                        "E        G     A     G\n" +
+                        " I'm a wanted man\n" +
+                        "E           G     A         G\n" +
+                        " Public enemy number one\n" +
+                        "E    G   A    G\n" +
+                        " Understand\n" +
+                        "E                      G        A                G\n" +
+                        " So lock up your daughter n' lock up your wife\n" +
+                        "E                      G        A                G\n" +
+                        " Lock up your back door and run for your life\n" +
+                        "E           G        A      G\n" +
+                        " The man is back in town\n" +
+                        "E           G            A~\n" +
+                        " So don't you mess me 'round\n" +
+                        "\n" +
+                        "\n" +
+                        "[Chorus]\n" +
+                        "\n" +
+                        "          A G E\n" +
+                        "Cause I'm T.N.T\n" +
+                        "\n" +
+                        "I'm dynamite\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "And I'll win that fight\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "I'm a power load\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "   G      A~\n" +
+                        "Watch me explode\n" +
+                        "\n" +
+                        "\n" +
+                        "[Outro]\n" +
+                        "\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "oi, oi, oi\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "oi, oi, oi\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "oi, oi, oi\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "oi, oi, oi\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "I'm dynamite [oi,oi,oi]\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "And I'll win the fight [oi,oi,oi]\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "\n" +
+                        "I'm a power load [oi,oi,oi]\n" +
+                        "A G E\n" +
+                        "T.N.T\n" +
+                        "  G        A~\n" +
+                        "Watch me explode\n" +
+                        "\n" +
+                        "...E", ArrayList()))
+        for (i in 1..10) {
+            list.add(Song(DataMockup.getSongId(), "name ${i}", "artist ${i}", "comment ${i}", "text ${i}", ArrayList()))
+        }
         list
     }
 
