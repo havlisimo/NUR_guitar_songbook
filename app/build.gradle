@@ -47,4 +47,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     compile 'org.jetbrains.anko:anko-design:0.10.3'
     compile 'com.bignerdranch.android:recyclerview-multiselect:+'
+    implementation 'yogesh.firzen:FilesLister:1.0.1.g'
+    implementation 'yogesh.firzen:MukkiyaSevaigal:1.0.6'
+
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
 }

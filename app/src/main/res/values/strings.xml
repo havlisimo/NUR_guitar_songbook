@@ -33,6 +33,7 @@
     <string name="songbooks_delete_dialog">Are you sure you want to delete selected songbooks?</string>
     <string name="options_backup">Backup</string>
     <string name="options_backup_desc">Will generate backup file</string>
+    <string name="options_backup_dialog">Will generate backup file</string>
     <string name="options_restore">Restore</string>
     <string name="options_restore_desc">From previously created backup</string>
     <string name="options_import_song">Import Song</string>

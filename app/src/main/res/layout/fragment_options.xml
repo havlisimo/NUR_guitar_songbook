@@ -4,9 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/item_backup" />
-    <include layout="@layout/item_restore" />
-    <include layout="@layout/item_import_song" />
-    <include layout="@layout/item_import_songbook" />
+    <include layout="@layout/item_backup"
+        android:id="@+id/item_backup"/>
+    <include layout="@layout/item_restore"
+        android:id="@+id/item_restore"/>
+    <include layout="@layout/item_import_song"
+        android:id="@+id/import_song"/>
+    <include layout="@layout/item_import_songbook"
+        android:id="@+id/import_songbook"/>
 
 </LinearLayout>
