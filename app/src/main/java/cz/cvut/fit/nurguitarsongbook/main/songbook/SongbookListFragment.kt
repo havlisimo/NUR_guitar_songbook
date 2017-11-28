@@ -58,6 +58,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
                     item.songIds.add(it)
                 }
             }
+            longSnackbar(view, R.string.added_to_songbook)
             activity.onBackPressed()
         }
         else {

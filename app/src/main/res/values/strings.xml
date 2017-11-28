@@ -32,8 +32,10 @@
     <string name="song_already_downloaded">This song is already in your collection</string>
     <string name="undo">UNDO</string>
     <string name="undo_songbook_deletion">Undo songbook deletion</string>
+    <string name="undo_song_deletion">Undo song deletion</string>
     <string name="songbooks_delete_dialog">Are you sure you want to delete selected songbooks?</string>
     <string name="songs_delete_dialog">Are you sure you want to delete selected songs?</string>
+    <string name="added_to_songbook">Successfully added to songbook</string>
     <string name="song_add_to">Add to</string>
     <string name="delete">Detele</string>
 
