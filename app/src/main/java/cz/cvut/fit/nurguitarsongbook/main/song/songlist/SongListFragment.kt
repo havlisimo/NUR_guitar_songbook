@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 /**
  * A placeholder fragment containing a simple view.
  */
-class SongListFragment : BaseSelectableListFragment<Song>() {
+open class SongListFragment : BaseSelectableListFragment<Song>() {
 
 //    init {
 //        selector.isSelectable = true

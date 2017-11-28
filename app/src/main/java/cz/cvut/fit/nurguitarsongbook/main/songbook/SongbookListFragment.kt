@@ -12,9 +12,12 @@ import android.text.TextWatcher
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.flask.colorpicker.ColorPickerView
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
+import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
+import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
@@ -32,7 +35,11 @@ import org.jetbrains.anko.design.snackbar
  */
 class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     override fun onItemClick(view: View, item: Songbook) {
-
+        val bundle = Bundle()
+        bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
+        App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
+                "Songbook detail", bundle
+                )
     }
 
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
@@ -95,7 +102,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             } else {
                 val name = diag.name.text.toString()
                 val colorPicker = diag.findViewById<View>(R.id.color_picker_view) as ColorPickerView
-                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor)))
+                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor), ArrayList()))
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
@@ -126,9 +133,9 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     val mDeleteMode = object : ModalMultiSelectorCallback(selector) {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            alert("Do you really wish to delete these songbooks?") {
+            alert(R.string.songbooks_delete_dialog) {
                 yesButton { adapter.deleteSelectedData()
-                    longSnackbar(view, "Undo", "Undo", {adapter.undoDelete()})
+                    longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
                 }
                 noButton {  }
             }.show()
