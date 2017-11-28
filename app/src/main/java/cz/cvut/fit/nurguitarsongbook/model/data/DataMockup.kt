@@ -2,8 +2,8 @@ package cz.cvut.fit.nurguitarsongbook.model.data
 
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.model.entity.Chord
-import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
+import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
 
 /**
@@ -23,7 +23,7 @@ object DataMockup {
         list
     }
     val songs: MutableList<Song> by lazy {
-        ArrayList<Song>()
+        SongsMockup.songs
     }
     val onlineSongs: MutableList<Song> by lazy {
        SongsMockup.songs

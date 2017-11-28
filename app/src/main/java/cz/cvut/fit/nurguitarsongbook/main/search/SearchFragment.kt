@@ -32,13 +32,14 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by tomas on 27.11.2017.
  */
-class SearchFragment: BaseListFragment<SongSearchWrapper>() {
+class SearchFragment : BaseListFragment<SongSearchWrapper>() {
     companion object {
         const val OFFLINE_HEADER = 1
         const val ONLINE_HEADER = 2
         const val OFFLINE_SONG = 3
         const val ONLINE_SONG = 4
     }
+
     private var disposable: Disposable? = null
 
     private var searchString: String = ""
@@ -75,14 +76,14 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
         searchView.setQueryHint(getString(R.string.search_hint))
         searchView.setQuery(searchString, false)
         disposable = Observable.create<String>({ e ->
-            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
-                    e.onNext(p0 ?: "" )
+                    e.onNext(p0 ?: "")
                     return true
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
-                    e.onNext(p0 ?: "" )
+                    e.onNext(p0 ?: "")
                     return true
                 }
             })
@@ -92,7 +93,7 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
             .subscribe({
                 searchString = it
                 reloadItems()
-            }, { Log.d("SearchFragment", "error", it)})
+            }, { Log.d("SearchFragment", "error", it) })
 
     }
 
@@ -159,6 +160,20 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
                 App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
                     SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item.song), SongDetailFragment.OFFLINE))
             })
+            holder?.view?.songbookLabels?.removeAllViews()
+            if (item.song?.songbooks?.size ?: 0 > 0) {
+                val containerWidth = App.convertDpToPixel(80f)
+                var width = containerWidth / (item.song?.songbooks?.size ?: 1)
+                if (item.song?.songbooks?.size!! < 5) {
+                    width = containerWidth / 5
+                }
+                item.song.songbooks.forEach {
+                    val tv = View(activity)
+                    tv.layoutParams = ViewGroup.LayoutParams(width.toInt(), ViewGroup.LayoutParams.MATCH_PARENT)
+                    tv.setBackgroundColor(it.color.toArgb())
+                    holder?.view?.songbookLabels?.addView(tv)
+                }
+            }
         }
         if (item.type.equals(ONLINE_SONG)) {
             holder?.view?.songNameOnline?.text = item.song?.name
@@ -173,8 +188,7 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
                     DataMockup.songs.add(song!!)
                     Snackbar.make(it, R.string.song_downloaded, Snackbar.LENGTH_SHORT).show()
                     reloadItems()
-                }
-                else {
+                } else {
                     Snackbar.make(it, R.string.song_already_downloaded, Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -184,8 +198,7 @@ class SearchFragment: BaseListFragment<SongSearchWrapper>() {
     private fun setArrow(arrow: ImageView?, hidden: Boolean) {
         if (hidden) {
             arrow?.setImageResource(R.drawable.arrow_down)
-        }
-        else {
+        } else {
             arrow?.setImageResource(R.drawable.arrow_up)
         }
 
