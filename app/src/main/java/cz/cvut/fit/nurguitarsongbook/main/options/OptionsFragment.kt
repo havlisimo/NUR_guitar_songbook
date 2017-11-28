@@ -1,10 +1,14 @@
 package cz.cvut.fit.nurguitarsongbook.main.options
 
+import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.graphics.Path
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -40,15 +44,14 @@ class OptionsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater!!.inflate(R.layout.fragment_options, container, false)
-        v.item_backup.setOnClickListener{_-> createBackup()}
-        v.item_restore.setOnClickListener{_-> loadBackup()}
-        v.import_song.setOnClickListener{_-> importSong()}
-        v.import_songbook.setOnClickListener{_-> importSongbook()}
+        v.item_backup.setOnClickListener{_-> checkpermissions({createBackup()})}
+        v.item_restore.setOnClickListener{_-> checkpermissions({loadBackup()})}
+        v.import_song.setOnClickListener{_-> checkpermissions({importSong()})}
+        v.import_songbook.setOnClickListener{_-> checkpermissions({importSongbook()}) }
         return v
     }
 
     fun createBackup() {
-        checkpermissions()
         val builder = getDialogBuilder(activity)
         builder.setPositiveButton(R.string.songbook_create,  null)
         builder.setTitle(R.string.songbook_title)
@@ -85,8 +88,6 @@ class OptionsFragment : BaseFragment() {
     }
 
     fun loadBackup() {
-        checkpermissions()
-        createArbitraryFiles()
         val dialog = prepDialog()
         dialog.setOnFileSelectedListener { file, path -> run {
             val res = OptionsMockup.loadBackup(path)
@@ -96,8 +97,6 @@ class OptionsFragment : BaseFragment() {
     }
 
     fun importSong() {
-        checkpermissions()
-        createArbitraryFiles()
         val dialog = prepDialog()
         dialog.setOnFileSelectedListener { file, path -> run {
             val res = OptionsMockup.importSong(path)
@@ -108,8 +107,6 @@ class OptionsFragment : BaseFragment() {
     }
 
     fun importSongbook() {
-        checkpermissions()
-        createArbitraryFiles()
         val dialog = prepDialog()
         dialog.setOnFileSelectedListener { file, path -> run {
             val res = OptionsMockup.importSongbook(path)
@@ -119,7 +116,20 @@ class OptionsFragment : BaseFragment() {
         dialog.show()
     }
 
-    fun checkpermissions() {
+    val MY_PERMISSIONS_REQUEST = 1
+
+    var permissionsDo : () -> Unit = {}
+
+    fun checkpermissions(passed: () -> Unit) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsDo = passed
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), MY_PERMISSIONS_REQUEST)
+        }
+        else {
+            createArbitraryFiles()
+            passed()
+        }
 
     }
 
@@ -155,6 +165,14 @@ class OptionsFragment : BaseFragment() {
         builder.setView(view)
         builder.setNegativeButton(R.string.songbook_cancel, {dialog, _ -> dialog.dismiss() })
         return builder
+    }
+
+    fun permissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (grantResults!!.size  == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            permissionsDo()
+        }
+        else toast("permissions not granted")
     }
 
 

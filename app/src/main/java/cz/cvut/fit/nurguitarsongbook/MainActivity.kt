@@ -16,6 +16,7 @@ import cz.cvut.fit.nurguitarsongbook.main.song.songlist.SongListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.main_layout.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -132,4 +133,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         homeAsUpEnabled = enabled
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (App.instance.fragmentManager.currentFragment is OptionsFragment)
+        {
+            val fr = App.instance.fragmentManager.currentFragment as OptionsFragment
+            fr.permissionsResult(requestCode, permissions, grantResults)
+        }
+
+    }
 }
