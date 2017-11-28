@@ -8,6 +8,13 @@
     <string name="menu_songs">Songs</string>
     <string name="menu_songbooks">Song Lists</string>
     <string name="menu_settings">Settings</string>
+    <string name="songbook_name">Songbook Name</string>
+    <string name="songbook_create">Create</string>
+    <string name="songbook_cancel">Cancel</string>
+    <string name="songbook_title">Create Songbook</string>
+    <string name="songbook_name_error">Name has to have at least 3 characters</string>
+    <string name="songbook_errors">Please review errors</string>
+    <string name="songbook_success">Songbook created seucesfully</string>
     <string name="title_activity_song_detail">Song Detail</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_song_edit">Edit song data</string>
@@ -23,5 +30,6 @@
     <string name="search_hint">Type to search...</string>
     <string name="song_downloaded">Song Downloaded</string>
     <string name="song_already_downloaded">This song is already in your collection</string>
+
 
 </resources>
