@@ -98,7 +98,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
                 App.instance.fragmentManager.changeFragment(SongbookListFragment::class.java, SongbookListFragment::class.java.getSimpleName(), bundle)
         }
         if (item?.itemId == R.id.action_play_song) {
-            startActivity( PlaySongActivity.newIntent( activity ) )
+            startActivity( PlaySongActivity.newIntent( activity, song.text ) )
         }
         return super.onOptionsItemSelected(item)
     }
