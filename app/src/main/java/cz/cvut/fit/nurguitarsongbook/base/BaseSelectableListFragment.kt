@@ -30,6 +30,11 @@ abstract class BaseSelectableListFragment<T>: BaseFragment(), SelectableListFrag
         return 0
     }
 
-    abstract fun onItemClick( view: View, item: T)
+    override fun onResume() {
+        super.onResume()
+        adapter.refreshData()
+    }
+
+    abstract fun onItemClick(view: View, item: T)
 
 }

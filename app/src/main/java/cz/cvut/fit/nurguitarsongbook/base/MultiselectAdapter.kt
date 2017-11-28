@@ -62,6 +62,11 @@ class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val sel
         purgeData()
     }
 
+    fun refreshData() {
+        data = listFragment.getData()
+        notifyDataSetChanged()
+    }
+
     class SelectableViewHolder(val view: View, val selector: MultiSelector) : MultiSelectorBindingHolder(view, selector) {
 
         private var selectable = false
@@ -86,7 +91,6 @@ class MultiselectAdapter<T>(val listFragment: SelectableListFragment<T>, val sel
             selected = p0
             view.checkbox.isChecked = p0
         }
-
     }
 
 }

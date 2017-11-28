@@ -32,4 +32,9 @@ class BaseAdapter<T>(val listFragment: ListFragment<T>) : RecyclerView.Adapter<B
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
+    fun refreshData() {
+        data = listFragment.getData()
+        notifyDataSetChanged()
+    }
+
 }
