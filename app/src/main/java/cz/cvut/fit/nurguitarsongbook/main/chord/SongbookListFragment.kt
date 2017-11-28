@@ -9,24 +9,25 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
-import com.bignerdranch.android.multiselector.MultiSelector
 import com.flask.colorpicker.ColorPickerView
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
-import cz.cvut.fit.nurguitarsongbook.base.BaseAdapter
-import cz.cvut.fit.nurguitarsongbook.base.BaseListFragment
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
 import kotlinx.android.synthetic.main.dialog_songbook.*
-import kotlinx.android.synthetic.main.item_chord.view.*
-import org.jetbrains.anko.*
-import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
+import kotlinx.android.synthetic.main.fragment_songbook_list.view.*
+import kotlinx.android.synthetic.main.item_chord.view.*
+import org.jetbrains.anko.toast
 
 
 
@@ -79,6 +80,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     }
 
     fun toggleSelection() {
+        App.instance.activity?.showToolbar(false)
         val a = activity as AppCompatActivity
         a.startSupportActionMode(mDeleteMode)
     }
@@ -136,6 +138,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             }
             selector.clearSelections()
             mode!!.finish()
+            App.instance.activity?.showToolbar(true)
             return true
         }
 
@@ -143,6 +146,13 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             super.onCreateActionMode(actionMode, menu)
             activity.menuInflater.inflate(R.menu.menu_songbook_list, menu)
             return true
+        }
+
+        override fun onDestroyActionMode(actionMode: ActionMode?) {
+            super.onDestroyActionMode(actionMode)
+            //App.instance.activity?.showToolbar(true)
+            val a = activity as AppCompatActivity
+            a.supportActionBar?.show()
         }
     }
 
