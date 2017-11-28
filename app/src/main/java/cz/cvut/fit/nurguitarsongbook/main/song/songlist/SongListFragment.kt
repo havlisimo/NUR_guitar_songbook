@@ -1,13 +1,11 @@
 package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
+import android.app.FragmentManager
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.MainActivity
@@ -19,9 +17,11 @@ import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.item_search_song_offline.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.noButton
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 
 /**
@@ -82,6 +82,31 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fr_mode = data?.getInt(EXTRA_MODE) ?: MODE_NORMAL
+        setHasOptionsMenu(fr_mode != MODE_NORMAL)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        if (fr_mode == MODE_SONGBOOK) {
+            inflater!!.inflate(R.menu.menu_songbook_detail, menu)
+        }
+        if (fr_mode == MODE_ADD_SONGS)
+            inflater!!.inflate(R.menu.menu_add_songs_to_songbook, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.action_done -> run {addSelectedSongsToSongbook() }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun addSelectedSongsToSongbook() {
+        val sb = DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!)
+        val items = adapter.getSelectedItems().map { song -> song.id }
+        sb.songIds.addAll(items)
+        fragmentManager.popBackStackImmediate()
 
     }
 
@@ -89,19 +114,39 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         super.onViewCreated(view, savedInstanceState)
         App.instance.activity?.setDisplayHomeAsUpEnabled(false)
         App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songs)
+        if (fr_mode == MODE_SONGBOOK) {
+            view!!.fab.visibility = View.VISIBLE
+            view.fab.setOnClickListener {_-> run {startMissingSongsActivity()}}
+        }
+    }
+
+    private fun startMissingSongsActivity() {
+        val bundle = Bundle()
+        bundle.putInt(SongListFragment.EXTRA_MODE, SongListFragment.MODE_ADD_SONGS)
+        bundle.putInt(SongListFragment.SONGBOOK_ID, data?.getInt(SONGBOOK_ID)!!)
+        App.instance.fragmentManager.changeFragment(SongListFragment::class.java, "add_songs_to_songbook", bundle)
     }
 
     override fun getData(): MutableList<Song> {
         mySongs.clear()
         if (fr_mode == MODE_NORMAL) {
             return DataMockup.songs
-        } else {
+        }
+        if (fr_mode == MODE_SONGBOOK) {
             val sbName = data?.getString(SONGBOOK_NAME)
             val sbId = data?.getInt(SONGBOOK_ID)
             App.instance.activity?.supportActionBar?.title = sbName
             (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
             mySongs.addAll(DataMockup.getSongsForSongbookId(sbId!!))
         }
+        if (fr_mode == MODE_ADD_SONGS) {
+            val sbId = data?.getInt(SONGBOOK_ID)
+            (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
+            mySongs.addAll(DataMockup.getSongsNotInSongbook(sbId!!))
+            App.instance.activity?.supportActionBar?.title = "Add songs to songbook"
+            selector.isSelectable = true
+        }
+
         return mySongs
     }
 
@@ -169,6 +214,7 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         val SONGBOOK_ID: String = "sbid"
         const val MODE_NORMAL = 0
         const val MODE_SONGBOOK = 1
+        const val MODE_ADD_SONGS = 2
         const val EXTRA_MODE = "fr_mode"
     }
 

@@ -59,4 +59,9 @@ object DataMockup {
         return songbooks.first { songbook -> songbook.id == sbId }
     }
 
+    fun getSongsNotInSongbook(sbId: Int): List<Song> {
+        val songbook = getSongbookById(sbId)
+        return songs.filter { song ->  !songbook.songIds.contains(song.id)}
+    }
+
 }
