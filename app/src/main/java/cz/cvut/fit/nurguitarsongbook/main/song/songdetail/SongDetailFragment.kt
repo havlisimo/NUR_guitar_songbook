@@ -67,6 +67,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.menu_song_detail, menu)
+        menu?.findItem(R.id.action_edit_song)?.setVisible(songType.equals(OFFLINE))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

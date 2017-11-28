@@ -28,10 +28,10 @@
     <string name="search_offline_header">On device</string>
     <string name="search_online_header">Online</string>
     <string name="search_hint">Type to search...</string>
+    <string name="song_downloaded">Song Downloaded</string>
+    <string name="song_already_downloaded">This song is already in your collection</string>
     <string name="undo">UNDO</string>
     <string name="undo_songbook_deletion">Undo songbook deletion</string>
     <string name="songbooks_delete_dialog">Are you sure you want to delete selected songbooks?</string>
-
-
 
 </resources>

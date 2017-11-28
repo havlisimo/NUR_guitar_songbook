@@ -54,6 +54,15 @@
 
             </LinearLayout>
 
+            <ImageButton
+                android:background="@null"
+                android:id="@+id/downloadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_download"/>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
