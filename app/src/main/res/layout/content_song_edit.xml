@@ -8,52 +8,50 @@
     tools:context=".main.song.songdetail.SongEditActivity"
     tools:showIn="@layout/activity_song_edit">
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvnamelabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/et_song_name"
-            android:text="@string/name"/>
-
-        <EditText
-            android:id="@+id/et_song_name"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvnamelabel"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvartistlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/et_song_name"
-            android:text="@string/artist"
-            android:layout_below="@id/et_song_name"/>
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:id="@+id/et_song_name"/>
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_song_artist"
-            android:layout_below="@id/tvartistlabel"/>
-        <TextView
-            android:id="@+id/tvcommentlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/et_song_name"
-            android:text="@string/comment"
-            android:layout_below="@id/et_song_artist"/>
+            android:layout_height="wrap_content">
 
-        <EditText
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/artist"
+                android:id="@+id/et_song_artist"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_song_comment"
-            android:layout_below="@id/tvcommentlabel"/>
+            android:layout_height="wrap_content">
 
-    </RelativeLayout>
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/comment"
+                android:id="@+id/et_song_comment"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>
