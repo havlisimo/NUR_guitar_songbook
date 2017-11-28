@@ -31,6 +31,14 @@
     <string name="undo">UNDO</string>
     <string name="undo_songbook_deletion">Undo songbook deletion</string>
     <string name="songbooks_delete_dialog">Are you sure you want to delete selected songbooks?</string>
+    <string name="options_backup">Backup</string>
+    <string name="options_backup_desc">Will generate backup file</string>
+    <string name="options_restore">Restore</string>
+    <string name="options_restore_desc">From previously created backup</string>
+    <string name="options_import_song">Import Song</string>
+    <string name="options_import_song_formats">Supported formats: Json, Agama </string>
+    <string name="options_import_songbooks_formats">Supported formats: Json, Agama </string>
+    <string name="options_import_songbooks">Import Song List </string>
 
 
 
