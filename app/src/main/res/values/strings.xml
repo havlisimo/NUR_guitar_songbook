@@ -60,5 +60,7 @@
     <string name="options_ts_large">Large</string>
     <string name="options_ts_unk">Unknown</string>
     <string name="options_ts_dialog">Please select text size for song lyrics</string>
+    <string name="undo_song_removal">Undo song removal</string>
+    <string name="remove_songs">Are you sure you want to remove selected songs from songbook?</string>
 
 </resources>

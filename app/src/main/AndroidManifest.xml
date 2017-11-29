@@ -25,6 +25,10 @@
             android:label="@string/title_activity_song_edit"
             android:theme="@style/AppTheme" />
         <activity
+            android:name="cz.cvut.fit.nurguitarsongbook.main.songbook.SongBookEditActivity"
+            android:label="Edit Sonbook"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name="cz.cvut.fit.nurguitarsongbook.main.song.songdetail.PlaySongActivity"
             android:label="@string/title_activity_play_song"
             android:theme="@style/AppTheme" />

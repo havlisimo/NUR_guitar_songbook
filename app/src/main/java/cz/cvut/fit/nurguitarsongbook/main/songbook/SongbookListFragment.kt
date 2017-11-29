@@ -44,7 +44,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         const val MODE_NORMAL = 0
         const val MODE_SELECT_SINGLE = 1
         const val EXTRA_SELECTED_IDS = "selectedIds"
-        const val EXTRA_MODE = "mode"
+        const val EXTRA_MODE = "fr_mode"
     }
 
     var mode: Int = MODE_NORMAL
@@ -62,7 +62,9 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
             activity.onBackPressed()
         }
         else {
-            bundle.putIntegerArrayList(SongListFragment.INDEX_LIST, item.songIds)
+            bundle.putString(SongListFragment.SONGBOOK_NAME, item.name)
+            bundle.putInt(SongListFragment.SONGBOOK_ID, item.id)
+            bundle.putInt(SongListFragment.EXTRA_MODE, SongListFragment.MODE_SONGBOOK)
             App.instance.fragmentManager.changeFragment(SongListFragment::class.java,
                 "Songbook detail", bundle
             )
@@ -81,9 +83,11 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.instance.activity?.setDisplayHomeAsUpEnabled(false)
         mode = data?.getInt(EXTRA_MODE) ?: MODE_NORMAL
         if (mode== MODE_SELECT_SINGLE) {
             App.instance.activity?.supportActionBar?.setTitle(R.string.song_add_to)
+            App.instance.activity?.setDisplayHomeAsUpEnabled(true)
         }
         else {
             App.instance.activity?.supportActionBar?.setTitle(R.string.menu_songbooks)
@@ -134,14 +138,14 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         builder.setPositiveButton(R.string.songbook_create,  null)
         builder.setTitle(R.string.songbook_title)
         val diag = builder.create()
+
         diag.show()
         diag.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener({v -> run {
             if (diag.wrapper.error != null) {
                 toast(activity.getString(R.string.songbook_errors));
             } else {
                 val name = diag.name.text.toString()
-                val colorPicker = diag.findViewById<View>(R.id.color_picker_view) as ColorPickerView
-                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor), ArrayList()))
+                DataMockup.songbooks.add(Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList()))
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
@@ -154,6 +158,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         val builder = AlertDialog.Builder(context)
         val view = activity.layoutInflater.inflate(R.layout.dialog_songbook, null);
         view.wrapper.error = context.getString(R.string.songbook_name_error)
+        view.color_picker_view.setSelectedColor(resources.getColor(R.color.magenta))
         view.name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().length < 3) view.wrapper.error = context.getString(R.string.songbook_name_error)

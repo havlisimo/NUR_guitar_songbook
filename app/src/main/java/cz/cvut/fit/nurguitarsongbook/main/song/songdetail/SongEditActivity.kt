@@ -23,7 +23,7 @@ class SongEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_song_edit)
         setSupportActionBar(toolbar_edit_song)
         songId = intent.getIntExtra(SongEditActivity.INTENT_SONG_ID, 0);
-        song = DataMockup.songs[songId]
+        song = DataMockup.getSongById(songId)
         this.et_song_name.setText( song.name )
         this.et_song_artist.setText( song.artist )
         this.et_song_comment.setText( song.comment )

@@ -18,13 +18,20 @@
             android:hint="@string/songbook_name"
             android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
-    <com.flask.colorpicker.ColorPickerView
+    <!--<com.flask.colorpicker.ColorPickerView-->
+        <!--android:id="@+id/color_picker_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:alphaSlider="false"-->
+        <!--app:density="12"-->
+        <!--app:lightnessSlider="false"-->
+        <!--app:wheelType="FLOWER"-->
+        <!--/>-->
+    <uz.shift.colorpicker.LineColorPicker
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/color_picker_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:alphaSlider="false"
-        app:density="12"
-        app:lightnessSlider="false"
-        app:wheelType="FLOWER"
-        />
+        android:layout_height="60dp"
+        app:orientation="horizontal"
+        app:colors="@array/rainbow"/>
 </LinearLayout>
