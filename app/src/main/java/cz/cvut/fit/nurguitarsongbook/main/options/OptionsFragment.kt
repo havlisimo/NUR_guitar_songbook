@@ -22,6 +22,7 @@ import android.system.Os.mkdir
 import android.text.Editable
 import android.text.TextWatcher
 import com.flask.colorpicker.ColorPickerView
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
@@ -48,6 +49,7 @@ class OptionsFragment : BaseFragment() {
         v.item_restore.setOnClickListener{_-> checkpermissions({loadBackup()})}
         v.import_song.setOnClickListener{_-> checkpermissions({importSong()})}
         v.import_songbook.setOnClickListener{_-> checkpermissions({importSongbook()}) }
+        App.instance.activity?.supportActionBar?.setTitle(R.string.menu_settings)
         return v
     }
 
@@ -80,7 +82,7 @@ class OptionsFragment : BaseFragment() {
     fun createBackup() {
         val builder = getDialogBuilder(activity)
         builder.setPositiveButton(R.string.songbook_create,  null)
-        builder.setTitle(R.string.songbook_title)
+        builder.setTitle("Create backup file")
         val diag = builder.create()
         diag.show()
         diag.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener({v -> run {
@@ -120,6 +122,7 @@ class OptionsFragment : BaseFragment() {
             if (!res) toast(R.string.options_file_review)
             else toast(R.string.options_file_import_success)
         } }
+        dialog.show()
     }
 
     fun importSong() {

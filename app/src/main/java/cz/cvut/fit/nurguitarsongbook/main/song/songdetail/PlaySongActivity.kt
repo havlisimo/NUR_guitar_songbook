@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import cz.cvut.fit.nurguitarsongbook.R
+import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
 
 import kotlinx.android.synthetic.main.activity_play_song.*
 import kotlinx.android.synthetic.main.content_play_song.*
@@ -25,6 +27,7 @@ class PlaySongActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_play_song)
         text = intent.getStringExtra( INTENT_SONG_TEXT )
         song_text.text = text
+        song_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, OptionsMockup.songTextSize.toFloat())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
