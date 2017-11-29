@@ -43,7 +43,7 @@ class SongBookEditActivity : AppCompatActivity() {
 
         })
         name.setText(songook.name)
-//        color_picker_view.selectedColor = songook.color.toArgb()
+        color_picker_view.setSelectedColor(songook.color.toArgb())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,7 +56,7 @@ class SongBookEditActivity : AppCompatActivity() {
         if (item?.itemId == R.id.action_done) {
             if (wrapper.error == null) {
                 songook.name = name.text.toString()
-                songook.color = SongbookColor(color_picker_view.selectedColor)
+                songook.color = SongbookColor(color_picker_view.color)
                 finish()
             }
             else toast(R.string.songbook_errors)

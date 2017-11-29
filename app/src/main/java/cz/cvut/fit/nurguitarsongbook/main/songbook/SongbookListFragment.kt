@@ -138,14 +138,14 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         builder.setPositiveButton(R.string.songbook_create,  null)
         builder.setTitle(R.string.songbook_title)
         val diag = builder.create()
+
         diag.show()
         diag.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener({v -> run {
             if (diag.wrapper.error != null) {
                 toast(activity.getString(R.string.songbook_errors));
             } else {
                 val name = diag.name.text.toString()
-                val colorPicker = diag.findViewById<View>(R.id.color_picker_view) as ColorPickerView
-                DataMockup.songbooks.add(Songbook(1, name, SongbookColor(colorPicker.selectedColor), ArrayList()))
+                DataMockup.songbooks.add(Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList()))
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
@@ -158,6 +158,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         val builder = AlertDialog.Builder(context)
         val view = activity.layoutInflater.inflate(R.layout.dialog_songbook, null);
         view.wrapper.error = context.getString(R.string.songbook_name_error)
+        view.color_picker_view.setSelectedColor(resources.getColor(R.color.magenta))
         view.name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().length < 3) view.wrapper.error = context.getString(R.string.songbook_name_error)
