@@ -64,4 +64,8 @@ object DataMockup {
         return songs.filter { song ->  !songbook.songIds.contains(song.id)}
     }
 
+    fun getSongById(songId: Int): Song {
+        return songs.first { song -> song.id == songId }
+    }
+
 }

@@ -1,6 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
 import android.app.FragmentManager
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +14,7 @@ import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment
 import cz.cvut.fit.nurguitarsongbook.base.MultiselectAdapter
 import cz.cvut.fit.nurguitarsongbook.main.song.songdetail.SongDetailFragment
+import cz.cvut.fit.nurguitarsongbook.main.songbook.SongBookEditActivity
 import cz.cvut.fit.nurguitarsongbook.main.songbook.SongbookListFragment
 import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
@@ -65,11 +67,11 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     }
 
     private fun removeSongsFromSongbook(mode: ActionMode) {
-        alert(R.string.songbooks_delete_dialog) {
+        alert(R.string.remove_songs) {
             yesButton {
                 adapter.deleteSelectedData()
                 DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
-                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {
+                longSnackbar(view, R.string.undo_song_removal, R.string.undo, {
                     adapter.undoDelete()
                     DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
                 })
@@ -98,8 +100,19 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_done -> run {addSelectedSongsToSongbook() }
+            R.id.action_edit_songbook -> run {startEditSongookActivity() }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun startEditSongookActivity() {
+        val i = SongBookEditActivity.newIntent(activity, data?.getInt(SONGBOOK_ID)!!)
+        startActivityForResult(i, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        adapter.refreshData()
     }
 
     private fun addSelectedSongsToSongbook() {
@@ -133,11 +146,10 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
             return DataMockup.songs
         }
         if (fr_mode == MODE_SONGBOOK) {
-            val sbName = data?.getString(SONGBOOK_NAME)
-            val sbId = data?.getInt(SONGBOOK_ID)
-            App.instance.activity?.supportActionBar?.title = sbName
+            val songbook = DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!)
+            App.instance.activity?.supportActionBar?.title = songbook.name
             (activity as MainActivity).setDisplayHomeAsUpEnabled(true)
-            mySongs.addAll(DataMockup.getSongsForSongbookId(sbId!!))
+            mySongs.addAll(DataMockup.getSongsForSongbookId(songbook.id))
         }
         if (fr_mode == MODE_ADD_SONGS) {
             val sbId = data?.getInt(SONGBOOK_ID)
@@ -190,9 +202,9 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     }
 
     private fun deleteSongs(mode: ActionMode?) {
-        alert(R.string.songbooks_delete_dialog) {
+        alert(R.string.songs_delete_dialog) {
             yesButton { adapter.deleteSelectedData()
-                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
+                longSnackbar(view, R.string.undo_song_deletion, R.string.undo, {adapter.undoDelete()})
                 mode!!.finish()
             }
             noButton {  }
