@@ -51,6 +51,8 @@ dependencies {
     implementation 'yogesh.firzen:FilesLister:1.0.1.g'
     implementation 'yogesh.firzen:MukkiyaSevaigal:1.0.6'
 
+    implementation 'com.google.code.gson:gson:2.8.2'
+
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile(group: 'uz.shift', name: 'colorpicker', version: '0.5', ext: 'aar')
 }
