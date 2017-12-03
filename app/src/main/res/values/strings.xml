@@ -14,7 +14,7 @@
     <string name="songbook_title">Create Songbook</string>
     <string name="songbook_name_error">Name has to have at least 3 characters</string>
     <string name="songbook_errors">Please review errors</string>
-    <string name="songbook_success">Songbook created seucesfully</string>
+    <string name="songbook_success">Songbook created successfully</string>
     <string name="title_activity_song_detail">Song Detail</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_song_edit">Edit song data</string>
@@ -62,5 +62,6 @@
     <string name="options_ts_dialog">Please select text size for song lyrics</string>
     <string name="undo_song_removal">Undo song removal</string>
     <string name="remove_songs">Are you sure you want to remove selected songs from songbook?</string>
+    <string name="options_import_dialog_title">Please select file for import</string>
 
 </resources>

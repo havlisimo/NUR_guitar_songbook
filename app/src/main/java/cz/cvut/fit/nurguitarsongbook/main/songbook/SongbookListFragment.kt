@@ -15,7 +15,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
-import com.flask.colorpicker.ColorPickerView
 import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseSelectableListFragment

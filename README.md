@@ -16,3 +16,7 @@ musí obsahovat checkbox s ID checkbox
 selekční mod se kontroluje přes selector
 
 viz https://github.com/sephiroth74/recyclerview-multiselect
+
+### file chooser dialog
+
+https://github.com/angads25/android-filepicker/wiki/filepicker-dialog

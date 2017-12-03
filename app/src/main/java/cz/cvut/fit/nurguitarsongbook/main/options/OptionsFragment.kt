@@ -4,34 +4,28 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.graphics.Path
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import com.github.angads25.filepicker.model.DialogConfigs
+import com.github.angads25.filepicker.model.DialogProperties
+import com.github.angads25.filepicker.view.FilePickerDialog
+import cz.cvut.fit.nurguitarsongbook.App
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_options.view.*
-import yogesh.firzen.filelister.FileListerDialog
-import android.system.Os.mkdir
-import android.text.Editable
-import android.text.TextWatcher
-import com.flask.colorpicker.ColorPickerView
-import cz.cvut.fit.nurguitarsongbook.App
-import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
-import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
-import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
 import kotlinx.android.synthetic.main.dialog_songbook.*
 import kotlinx.android.synthetic.main.dialog_songbook.view.*
+import kotlinx.android.synthetic.main.fragment_options.view.*
 import kotlinx.android.synthetic.main.item_text_size.view.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.design.longSnackbar
 import java.io.File
 
 
@@ -90,7 +84,7 @@ class OptionsFragment : BaseFragment() {
                 toast(activity.getString(R.string.songbook_errors));
             } else {
                 val name = diag.name.text.toString() + ".json"
-                val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), name)
+                val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name)
                 if (file.exists()) {
                     alert(R.string.options_backup_exists) {
                         yesButton {
@@ -117,8 +111,8 @@ class OptionsFragment : BaseFragment() {
 
     fun loadBackup() {
         val dialog = prepDialog()
-        dialog.setOnFileSelectedListener { file, path -> run {
-            val res = OptionsMockup.loadBackup(path)
+        dialog.setDialogSelectionListener { files -> run {
+            val res = OptionsMockup.loadBackup(files[0])
             if (!res) toast(R.string.options_file_review)
             else toast(R.string.options_file_import_success)
         } }
@@ -127,8 +121,8 @@ class OptionsFragment : BaseFragment() {
 
     fun importSong() {
         val dialog = prepDialog()
-        dialog.setOnFileSelectedListener { file, path -> run {
-            val res = OptionsMockup.importSong(path)
+        dialog.setDialogSelectionListener { files -> run {
+            val res = OptionsMockup.importSong(files[0])
             if (!res) toast(R.string.options_file_review)
             else toast(R.string.options_file_import_success)
         } }
@@ -137,8 +131,8 @@ class OptionsFragment : BaseFragment() {
 
     fun importSongbook() {
         val dialog = prepDialog()
-        dialog.setOnFileSelectedListener { file, path -> run {
-            val res = OptionsMockup.importSongbook(path)
+        dialog.setDialogSelectionListener { files -> run {
+            val res = OptionsMockup.importSongbook(files[0])
             if (!res) toast(R.string.options_file_review)
             else toast(R.string.options_file_import_success)
         } }
@@ -163,19 +157,30 @@ class OptionsFragment : BaseFragment() {
     }
 
     fun createArbitraryFiles() {
-        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "song.json")
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "song.json")
         if (!file.exists()) file.createNewFile()
-        val file2 = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "songbook.json")
+        val file2 = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "songbook.json")
         if (!file2.exists()) file2.createNewFile()
-        val file3 = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "backup1.json")
+        val file3 = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "backup1.json")
         if (!file3.exists()) file3.createNewFile()
 
     }
 
-    fun prepDialog() : FileListerDialog {
-        val dialog = FileListerDialog.createFileListerDialog(activity);
-        dialog.setFileFilter(FileListerDialog.FILE_FILTER.ALL_FILES)
-        dialog.setDefaultDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS))
+    fun getAppThemeId() : Int {
+        return activity.packageManager.getActivityInfo(activity.componentName, 0).theme
+    }
+
+    fun prepDialog() : FilePickerDialog {
+
+        val properties = DialogProperties()
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.root = Environment.getExternalStorageDirectory()
+        properties.error_dir = File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        properties.extensions = arrayOf("txt", "json")
+        val dialog = FilePickerDialog(activity, properties, getAppThemeId());
+        dialog.setTitle(R.string.options_import_dialog_title)
         return dialog
     }
 

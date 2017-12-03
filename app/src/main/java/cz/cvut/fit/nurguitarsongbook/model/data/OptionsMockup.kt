@@ -1,7 +1,11 @@
 package cz.cvut.fit.nurguitarsongbook.model.data
 
 import android.os.Environment
+import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.JsonIOException
+import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import cz.cvut.fit.nurguitarsongbook.model.entity.Songbook
 import cz.cvut.fit.nurguitarsongbook.model.entity.SongbookColor
@@ -35,17 +39,25 @@ object OptionsMockup {
         val id = DataMockup.getSongId()
 
         val gson = Gson()
-        val songs = gson.fromJson(FileReader(path), SongsImport::class.java)
-        songs.songs?.forEach {
-            DataMockup.songs.add(
-                Song(id,
-                    it.name,
-                    it.artist,
-                    "",
-                    it.text,
-                    it.chords.map { chord -> Pair(chord.index!!, chord.name!!)
-                    }))
+        try {
+            val songs = gson.fromJson(FileReader(path), SongsImport::class.java)
+            if (songs == null) return false;
+            Log.d("tag", "songs is null");
+
+            songs.songs?.forEach {
+                DataMockup.songs.add(
+                        Song(id,
+                                it.name,
+                                it.artist,
+                                "",
+                                it.text,
+                                it.chords.map { chord -> Pair(chord.index!!, chord.name!!)
+                                }))
+            }
+        } catch (e: JsonParseException) {
+            return false;
         }
+
 
         return true
     }

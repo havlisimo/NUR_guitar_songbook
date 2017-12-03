@@ -42,17 +42,14 @@ dependencies {
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
 
-    compile 'com.github.QuadFlask:colorpicker:0.0.13'
     compile 'org.jetbrains.anko:anko-common:0.10.3'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     compile 'org.jetbrains.anko:anko-design:0.10.3'
     compile 'com.bignerdranch.android:recyclerview-multiselect:+'
-    implementation 'yogesh.firzen:FilesLister:1.0.1.g'
-    implementation 'yogesh.firzen:MukkiyaSevaigal:1.0.6'
-
+    //filechooser
+    compile 'com.github.angads25:filepicker:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.2'
-
-    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    //colorpicker
     compile(group: 'uz.shift', name: 'colorpicker', version: '0.5', ext: 'aar')
 }
