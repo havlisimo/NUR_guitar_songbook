@@ -158,7 +158,7 @@ class SearchFragment : BaseListFragment<SongSearchWrapper>() {
             holder?.view?.songMetaOffline?.text = item.song?.artist ?: ""
             holder?.view?.findViewById<CardView>(R.id.card_view)?.setOnClickListener({
                 App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
-                    SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item.song), SongDetailFragment.OFFLINE))
+                    SongDetailFragment.newDataBundle(item.song!!.id, SongDetailFragment.OFFLINE))
             })
             holder?.view?.songbookLabels?.removeAllViews()
             if (item.song?.songbooks?.size ?: 0 > 0) {
@@ -180,7 +180,7 @@ class SearchFragment : BaseListFragment<SongSearchWrapper>() {
             holder?.view?.songMetaOnline?.text = item.song?.artist ?: ""
             holder?.view?.findViewById<CardView>(R.id.card_view)?.setOnClickListener({
                 App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java, SongDetailFragment::class.java.name,
-                    SongDetailFragment.newDataBundle(DataMockup.onlineSongs.indexOf(item.song), SongDetailFragment.ONLINE))
+                    SongDetailFragment.newDataBundle(item.song!!.id, SongDetailFragment.ONLINE))
             })
             holder?.view?.downloadButton?.setOnClickListener {
                 val song = item.song
