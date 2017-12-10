@@ -38,7 +38,7 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     override fun onItemClick(view: View, item: Song) {
         App.instance.fragmentManager.changeFragment(SongDetailFragment::class.java,
             SongDetailFragment::class.java.getSimpleName(),
-            SongDetailFragment.newDataBundle(DataMockup.songs.indexOf(item)))
+            SongDetailFragment.newDataBundle( item.id ))
     }
 
     var mySongs: ArrayList<Song> = ArrayList<Song>()

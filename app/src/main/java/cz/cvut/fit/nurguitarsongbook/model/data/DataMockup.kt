@@ -68,4 +68,7 @@ object DataMockup {
         return songs.first { song -> song.id == songId }
     }
 
+    fun getOnlineSongById(songId: Int): Song {
+        return onlineSongs.first { song -> song.id == songId }
+    }
 }
