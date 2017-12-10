@@ -48,10 +48,10 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
         songId = data!!.getInt(EXTRA_SONG_ID, 0);
         songType = data!!.getInt(EXTRA_SONG_TYPE, 0);
         if (songType == ONLINE) {
-            song = DataMockup.onlineSongs[songId]
+            song = DataMockup.getOnlineSongById(songId)
         }
         if (songType == OFFLINE) {
-            song = DataMockup.songs[songId]
+            song = DataMockup.getSongById(songId)
         }
         setHasOptionsMenu(true)
         App.instance.activity?.setDisplayHomeAsUpEnabled(true)
@@ -107,7 +107,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        song = DataMockup.songs[songId]
+        song = DataMockup.getSongById(songId)
         tv_song_name.setText( getString( R.string.name ) + ": " + song.name )
         tv_song_artist.setText( getString(R.string.artist ) + ": " + song.artist )
         tv_song_comment.setText( getString(R.string.comment ) + ": " + song.comment )
