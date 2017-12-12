@@ -63,5 +63,10 @@
     <string name="undo_song_removal">Undo song removal</string>
     <string name="remove_songs">Are you sure you want to remove selected songs from songbook?</string>
     <string name="options_import_dialog_title">Please select file for import</string>
+    <string name="text_speed">Text speed: </string>
+    <string name="no_songs">You have no songs downloaded download some from internet via Search songs menu.</string>
+    <string name="no_songs_in_sb">There are no songs in this songbook</string>
+    <string name="all_songs">This songbook already contains all possible songs</string>
+    <string name="no_songbooks">There are currently no songbook available, you create some first </string>
 
 </resources>

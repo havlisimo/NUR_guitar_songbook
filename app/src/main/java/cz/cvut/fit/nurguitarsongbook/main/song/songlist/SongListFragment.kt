@@ -1,9 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
-import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.view.*
@@ -23,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 
 /**
@@ -71,8 +68,10 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
             yesButton {
                 adapter.deleteSelectedData()
                 DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
+                checkLabel()
                 longSnackbar(view, R.string.undo_song_removal, R.string.undo, {
                     adapter.undoDelete()
+                    checkLabel()
                     DataMockup.getSongbookById(data?.getInt(SONGBOOK_ID)!!).songIds = ArrayList(adapter.data!!.map { song -> song.id })
                 })
                 mode!!.finish()
@@ -143,6 +142,7 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     override fun getData(): MutableList<Song> {
         mySongs.clear()
         if (fr_mode == MODE_NORMAL) {
+            checkLabel()
             return DataMockup.songs
         }
         if (fr_mode == MODE_SONGBOOK) {
@@ -158,8 +158,23 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
             App.instance.activity?.supportActionBar?.title = "Add songs to songbook"
             selector.isSelectable = true
         }
-
+        checkLabel()
         return mySongs
+    }
+
+    fun checkLabel() {
+        if (fr_mode == MODE_NORMAL) {
+            if (DataMockup.songs.size == 0) setEmptyLabelText(activity.getString(R.string.no_songs))
+            else hideLabel()
+        }
+        if (fr_mode == MODE_SONGBOOK) {
+            if (mySongs.size == 0) setEmptyLabelText(activity.getString(R.string.no_songs_in_sb))
+            else hideLabel()
+        }
+        if (fr_mode == MODE_ADD_SONGS) {
+            if (mySongs.size == 0) setEmptyLabelText(activity.getString(R.string.all_songs))
+            else hideLabel()
+        }
     }
 
     override fun getListItemView(viewType: Int): Int = R.layout.item_search_song_offline
@@ -204,7 +219,8 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
     private fun deleteSongs(mode: ActionMode?) {
         alert(R.string.songs_delete_dialog) {
             yesButton { adapter.deleteSelectedData()
-                longSnackbar(view, R.string.undo_song_deletion, R.string.undo, {adapter.undoDelete()})
+                checkLabel()
+                longSnackbar(view, R.string.undo_song_deletion, R.string.undo, {adapter.undoDelete(); checkLabel()})
                 mode!!.finish()
             }
             noButton {  }
