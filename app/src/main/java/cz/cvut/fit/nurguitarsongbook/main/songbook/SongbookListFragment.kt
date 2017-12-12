@@ -150,11 +150,21 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
                 toast(activity.getString(R.string.songbook_errors));
             } else {
                 val name = diag.name.text.toString()
-                DataMockup.songbooks.add(Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList()))
+                val sb = Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList())
+                DataMockup.songbooks.add(sb)
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
                 checkLabel()
+                if (mode == MODE_SELECT_SINGLE) {
+                    val list = data?.getIntegerArrayList(EXTRA_SELECTED_IDS)
+                    list?.forEach {
+                        sb.songIds.add(it)
+                    }
+                    longSnackbar(view, R.string.added_to_songbook)
+                    activity.onBackPressed()
+                } else {}
+
             }
 
         }})
