@@ -8,19 +8,50 @@
     tools:context=".main.song.songdetail.PlaySongActivity"
     tools:showIn="@layout/activity_play_song">
 
-    <ScrollView android:id="@+id/textAreaScroller"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="vertical"
+    <TextView
+        android:id="@+id/speed_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/text_speed"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:paddingBottom="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/speed_label" />
+
+    <ScrollView
+        android:id="@+id/textAreaScroller"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingBottom="16dp"
         android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line">
+
         <TextView
             android:id="@+id/song_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/song_playing" />
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

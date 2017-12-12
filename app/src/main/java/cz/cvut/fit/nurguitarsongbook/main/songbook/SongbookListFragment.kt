@@ -70,7 +70,13 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         }
     }
 
+    fun checkLabel() {
+        if (DataMockup.songbooks.size == 0) setEmptyLabelText(activity.getString(R.string.no_songbooks))
+        else hideLabel()
+    }
+
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
+        checkLabel()
         return DataMockup.songbooks
     }
 
@@ -144,10 +150,21 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
                 toast(activity.getString(R.string.songbook_errors));
             } else {
                 val name = diag.name.text.toString()
-                DataMockup.songbooks.add(Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList()))
+                val sb = Songbook(DataMockup.getSongbookId(), name, SongbookColor(diag.color_picker_view.color), ArrayList())
+                DataMockup.songbooks.add(sb)
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
+                checkLabel()
+                if (mode == MODE_SELECT_SINGLE) {
+                    val list = data?.getIntegerArrayList(EXTRA_SELECTED_IDS)
+                    list?.forEach {
+                        sb.songIds.add(it)
+                    }
+                    longSnackbar(view, R.string.added_to_songbook)
+                    activity.onBackPressed()
+                } else {}
+
             }
 
         }})
@@ -191,7 +208,8 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     private fun deleteSongs(mode: ActionMode?) {
         alert(R.string.songbooks_delete_dialog) {
             yesButton { adapter.deleteSelectedData()
-                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
+                checkLabel()
+                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete(); checkLabel()})
                 mode!!.finish()
             }
             noButton {  }
