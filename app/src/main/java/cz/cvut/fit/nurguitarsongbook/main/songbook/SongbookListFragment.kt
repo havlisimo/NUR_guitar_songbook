@@ -53,6 +53,12 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         if (mode == MODE_SELECT_SINGLE) {
             val list = data?.getIntegerArrayList(EXTRA_SELECTED_IDS)
             list?.forEach {
+                try {
+                    DataMockup.getSongById(it)
+                }
+                catch (e: NoSuchElementException) {
+                    DataMockup.songs.add(DataMockup.getOnlineSongById(it))
+                }
                 if (!item.songIds.contains(it)) {
                     item.songIds.add(it)
                 }

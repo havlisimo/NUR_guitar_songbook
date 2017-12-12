@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import cz.cvut.fit.nurguitarsongbook.App
@@ -20,10 +21,13 @@ import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.fragment_song_detail.*
-import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 import kotlinx.android.synthetic.main.item_song_line.view.*
 
 class SongDetailFragment : BaseFragment(), ListFragment<String> {
+
+    lateinit var scaleGestureDetector: ScaleGestureDetector
+    var textSize: Float = 1f
+
     override fun getListItemViewType(position: Int): Int = 0
 
     override fun getData(): MutableList<String> {
@@ -35,7 +39,8 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
     }
 
     override fun initListItem(holder: BaseAdapter.ViewHolder?, item: String) {
-        holder?.view?.line?.setTextSize(TypedValue.COMPLEX_UNIT_SP, OptionsMockup.songTextSize.toFloat())
+        val ts = App.convertSpToPixels(OptionsMockup.songTextSize.toFloat())*textSize.toFloat()
+        holder?.view?.line?.setTextSize(TypedValue.COMPLEX_UNIT_PX, ts)
         holder?.view?.line?.text = item
     }
 
@@ -82,6 +87,21 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
                 songbookLabelsDetail?.addView(tv)
             }
         }
+        scaleGestureDetector = ScaleGestureDetector(activity, simpleOnScaleGestureListener())
+        song_text.setOnTouchListener({
+            _, touchEvent -> scaleGestureDetector.onTouchEvent(touchEvent)
+        })
+    }
+
+    inner class simpleOnScaleGestureListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            var size = textSize
+            val factor = detector.scaleFactor
+            textSize = (size * factor)
+            song_text.adapter.notifyDataSetChanged()
+            return true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -101,7 +121,7 @@ class SongDetailFragment : BaseFragment(), ListFragment<String> {
                 App.instance.fragmentManager.changeFragment(SongbookListFragment::class.java, SongbookListFragment::class.java.getSimpleName(), bundle)
         }
         if (item?.itemId == R.id.action_play_song) {
-            startActivity( PlaySongActivity.newIntent( activity, song.text ) )
+            startActivity( PlaySongActivity.newIntent( activity, song.text, textSize ) )
         }
         return super.onOptionsItemSelected(item)
     }
