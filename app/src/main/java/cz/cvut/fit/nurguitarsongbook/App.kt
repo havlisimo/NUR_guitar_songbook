@@ -2,6 +2,9 @@ package cz.cvut.fit.nurguitarsongbook
 
 import android.app.Application
 import android.content.res.Resources
+import android.util.TypedValue
+
+
 
 
 class App : Application() {
@@ -30,6 +33,10 @@ class App : Application() {
             val metrics = Resources.getSystem().getDisplayMetrics()
             val px = dp * (metrics.densityDpi / 160f)
             return Math.round(px).toFloat()
+        }
+
+        fun convertSpToPixels(sp: Float): Int {
+            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().getDisplayMetrics()).toInt()
         }
     }
 }
