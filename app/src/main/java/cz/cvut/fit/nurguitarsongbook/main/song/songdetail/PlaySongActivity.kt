@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import cz.cvut.fit.nurguitarsongbook.R
 import cz.cvut.fit.nurguitarsongbook.model.data.OptionsMockup
 
@@ -28,6 +29,7 @@ class PlaySongActivity : AppCompatActivity() {
         text = intent.getStringExtra( INTENT_SONG_TEXT )
         song_text.text = text
         song_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, OptionsMockup.songTextSize.toFloat())
+        updateTextSpeed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,25 +40,36 @@ class PlaySongActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.action_despacito) {
-            if( speed > 1 )
+            if( speed > 1 ) {
                 speed = speed - 1
+                updateTextSpeed()
+            }
         }
         if (item?.itemId == R.id.action_play_pause) {
             if( paused == false )
             {
                 item.setIcon( R.drawable.ic_play_circle_outline_black_24dp )
                 paused = true
+                speed_label.visibility = View.GONE
+                line.visibility = View.GONE
             }
             else
             {
                 item.setIcon( R.drawable.ic_pause_circle_outline_black_24dp )
                 paused = false
+                speed_label.visibility = View.VISIBLE
+                line.visibility = View.VISIBLE
             }
         }
         if (item?.itemId == R.id.action_faster) {
             speed = speed + 1
+            updateTextSpeed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun updateTextSpeed() {
+        speed_label.text = "${getString(R.string.text_speed)}${speed}"
     }
 
     public override fun onResume() {

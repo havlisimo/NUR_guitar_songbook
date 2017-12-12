@@ -63,5 +63,6 @@
     <string name="undo_song_removal">Undo song removal</string>
     <string name="remove_songs">Are you sure you want to remove selected songs from songbook?</string>
     <string name="options_import_dialog_title">Please select file for import</string>
+    <string name="text_speed">Text speed: </string>
 
 </resources>
