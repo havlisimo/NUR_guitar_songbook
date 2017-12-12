@@ -113,7 +113,7 @@ class SearchFragment : BaseListFragment<SongSearchWrapper>() {
         list.add(SongSearchWrapper(OFFLINE_HEADER))
         if (!offlineHidden) list.addAll(DataMockup.songs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(OFFLINE_SONG, it) })
         list.add(SongSearchWrapper(ONLINE_HEADER))
-        if (!onlineHidden) list.addAll(DataMockup.onlineSongs.filter { applyFilter(searchString, it) }.map { SongSearchWrapper(ONLINE_SONG, it) })
+        if (!onlineHidden) list.addAll(DataMockup.onlineSongs.filter { applyFilter(searchString, it) }.filter { !DataMockup.songs.any { s -> s.id == it.id } }.map { SongSearchWrapper(ONLINE_SONG, it) })
         return list
     }
 
