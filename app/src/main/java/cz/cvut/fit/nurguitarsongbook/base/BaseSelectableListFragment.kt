@@ -17,6 +17,17 @@ abstract class BaseSelectableListFragment<T>: BaseFragment(), SelectableListFrag
     protected val selector = MultiSelector()
     protected val adapter: MultiselectAdapter<T> by lazy { MultiselectAdapter<T>(this, selector) }
 
+    protected fun setEmptyLabelText(text:String) {
+        empty_label.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+        empty_label.text = text
+    }
+
+    protected fun hideLabel() {
+        empty_label.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater?.inflate(R.layout.fragment_list, container, false)
 

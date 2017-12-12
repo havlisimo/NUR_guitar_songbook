@@ -70,7 +70,13 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
         }
     }
 
+    fun checkLabel() {
+        if (DataMockup.songbooks.size == 0) setEmptyLabelText(activity.getString(R.string.no_songbooks))
+        else hideLabel()
+    }
+
     override fun getData(): MutableList<cz.cvut.fit.nurguitarsongbook.model.entity.Songbook> {
+        checkLabel()
         return DataMockup.songbooks
     }
 
@@ -148,6 +154,7 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
                 diag.dismiss()
                 toast(activity.getString(R.string.songbook_success))
                 adapter.notifyItemInserted(adapter.itemCount - 1)
+                checkLabel()
             }
 
         }})
@@ -191,7 +198,8 @@ class SongbookListFragment : BaseSelectableListFragment<Songbook>() {
     private fun deleteSongs(mode: ActionMode?) {
         alert(R.string.songbooks_delete_dialog) {
             yesButton { adapter.deleteSelectedData()
-                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete()})
+                checkLabel()
+                longSnackbar(view, R.string.undo_songbook_deletion, R.string.undo, {adapter.undoDelete(); checkLabel()})
                 mode!!.finish()
             }
             noButton {  }

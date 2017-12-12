@@ -1,9 +1,7 @@
 package cz.cvut.fit.nurguitarsongbook.main.song.songlist
 
-import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.view.*
@@ -20,11 +18,9 @@ import cz.cvut.fit.nurguitarsongbook.model.data.DataMockup
 import cz.cvut.fit.nurguitarsongbook.model.entity.Song
 import kotlinx.android.synthetic.main.item_search_song_offline.view.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 
 /**
@@ -166,29 +162,18 @@ open class SongListFragment : BaseSelectableListFragment<Song>() {
         return mySongs
     }
 
-    fun setEmptyLabelText(text:String) {
-        empty_label.visibility = View.VISIBLE
-        recyclerView.visibility = View.GONE
-        empty_label.text = text
-    }
-
-    fun showLabel() {
-        empty_label.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
-    }
-
     fun checkLabel() {
         if (fr_mode == MODE_NORMAL) {
             if (DataMockup.songs.size == 0) setEmptyLabelText(activity.getString(R.string.no_songs))
-            else showLabel()
+            else hideLabel()
         }
         if (fr_mode == MODE_SONGBOOK) {
             if (mySongs.size == 0) setEmptyLabelText(activity.getString(R.string.no_songs_in_sb))
-            else showLabel()
+            else hideLabel()
         }
         if (fr_mode == MODE_ADD_SONGS) {
             if (mySongs.size == 0) setEmptyLabelText(activity.getString(R.string.all_songs))
-            else showLabel()
+            else hideLabel()
         }
     }
 
